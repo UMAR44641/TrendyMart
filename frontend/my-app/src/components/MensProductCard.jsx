@@ -1,15 +1,16 @@
 import React from 'react'
 
-const MensProductCard = () => {
+const MensProductCard = (props) => {
+    const {image,selection2,selection3}=props
   return (
     <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
         <div>
-                <img src="https://images.bloomingdalesassets.com/is/image/BLM/products/8/optimized/12013238_fpx.tif?$2014_BROWSE_FASHION$&fmt=webp&op_usm=0.7,1.0,0.5,0&resMode=sharp2&qlt=85,0&wid=372&hei=465" alt="" />
+                <img src={image} alt="image" />
         </div>
         <hr/>
         <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"flex-start"}}>
-            <h4>Boss</h4>
-            <p>Mix & Match Cotton Stretch Logo Print Drawstring Shorts</p>
+            <h4>{selection2}</h4>
+            <p style={{textAlign:"start"}}>{selection3}</p>
             <p>⭐⭐⭐⭐⭐</p>
             <p>INR 3,588.00</p>
             <div style={{display:"flex",gap:"10px"}}>
