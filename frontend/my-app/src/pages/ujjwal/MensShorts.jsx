@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid } from "@chakra-ui/react";
 import MensProductCard from "../../components/ujjwal/MensProductCard";
-import { AddIcon, MinusIcon } from "@chakra-ui/icons";
+import { Grid } from "@chakra-ui/react";
 import axios from "axios"
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-} from "@chakra-ui/react";
+import SideBar from "../../components/ujjwal/SideBar";
+import { useLocation, useSearchParams } from "react-router-dom";
+
 const MensShorts = () => {
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+console.log("locayion",location.search)
   const [data, setdata] = useState([])
- const getData=()=>{
-    axios.get("https://amazon-t415.onrender.com/products")
+ const getData=(params)=>{
+    axios.get("https://amazon-t415.onrender.com/products",params)
   .then(res=>{
     console.log(res.data)
     setdata(res.data)
@@ -21,142 +19,27 @@ const MensShorts = () => {
   }
 
   useEffect(()=>{
-    getData()
-  },[])
+    const price = searchParams.getAll("price")[0];
+    const paramObj = {
+      params: {
+        category: searchParams.getAll("category"),
+        _sort: price,
+        _order: price,
+      },
+    }
+    getData(paramObj)
+  },[location.search])
   
 
-  console.log(data);
+  // console.log(data);
   return (
     <div style={{ display: "flex" }}>
-      <div style={{ width: "20%", border: "0px solid gray", margin: "5px" }}>
-        <Accordion allowMultiple>
-          <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
-                  CATEGORY
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                }}
-              >
-                <button>Pants</button>
-                <button>Jeans & Denim</button>
-                <button>Shorts</button>
-              </div>
-            </AccordionPanel>
-          </AccordionItem>
-          <h2 style={{ alignContent: "flex-start", display: "flex" }}>
-            FILTER BY
-          </h2>
-          <AccordionItem>
-            {({ isExpanded }) => (
-              <>
-                <h2>
-                  <AccordionButton>
-                    <Box as="span" flex="1" textAlign="left">
-                      ITEM TYPE
-                    </Box>
-                    {isExpanded ? (
-                      <MinusIcon fontSize="12px" />
-                    ) : (
-                      <AddIcon fontSize="12px" />
-                    )}
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "start",
-                    }}
-                  >
-                    <div style={{margin:"10px",fontSize:"20px"}}>
-                      <input type="checkbox" id="scales" name="itemType" />
-                      <label for="scales"> Blazers</label>
-                    </div>
-                    <div style={{margin:"10px",fontSize:"20px"}}>
-                      <input type="checkbox" id="scales" name="itemType" />
-                      <label for="scales"> Coats</label>
-                    </div>
-                    <div style={{margin:"10px",fontSize:"20px"}}>
-                      <input type="checkbox" id="scales" name="itemType" />
-                      <label for="scales"> Dresses</label>
-                    </div>
-                    <div style={{margin:"10px",fontSize:"20px"}}>
-                      <input type="checkbox" id="scales" name="itemType" />
-                      <label for="scales"> Jackets</label>
-                    </div>
-                    <div style={{margin:"10px",fontSize:"20px"}}>
-                      <input type="checkbox" id="scales" name="itemType" />
-                      <label for="scales"> Jeans</label>
-                    </div>
-                  </div>
-                </AccordionPanel>
-              </>
-            )}
-          </AccordionItem>
-          <AccordionItem>
-            {({ isExpanded }) => (
-              <>
-                <h2>
-                  <AccordionButton>
-                    <Box as="span" flex="1" textAlign="left">
-                      ITEM TYPE
-                    </Box>
-                    {isExpanded ? (
-                      <MinusIcon fontSize="12px" />
-                    ) : (
-                      <AddIcon fontSize="12px" />
-                    )}
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "start",
-                    }}
-                  >
-                    <div style={{margin:"10px",fontSize:"20px"}}>
-                      <input type="checkbox" id="scales" name="itemType" />
-                      <label for="scales"> Blazers</label>
-                    </div>
-                    <div style={{margin:"10px",fontSize:"20px"}}>
-                      <input type="checkbox" id="scales" name="itemType" />
-                      <label for="scales"> Coats</label>
-                    </div>
-                    <div style={{margin:"10px",fontSize:"20px"}}>
-                      <input type="checkbox" id="scales" name="itemType" />
-                      <label for="scales"> Dresses</label>
-                    </div>
-                    <div style={{margin:"10px",fontSize:"20px"}}>
-                      <input type="checkbox" id="scales" name="itemType" />
-                      <label for="scales"> Jackets</label>
-                    </div>
-                    <div style={{margin:"10px",fontSize:"20px"}}>
-                      <input type="checkbox" id="scales" name="itemType" />
-                      <label for="scales"> Jeans</label>
-                    </div>
-                  </div>
-                </AccordionPanel>
-              </>
-            )}
-          </AccordionItem>
-        </Accordion>
+      <div style={{ width: "20%", border: "0px solid gray", margin: "5px",position:"sticky" }}>
+      <SideBar/>
       </div>
       <div
         style={{
-          width: "80%",
+          width: "75%",
           padding: "10px",
           margin: "5px",
           border: "1px solid balck",
