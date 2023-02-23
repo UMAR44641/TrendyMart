@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Grid } from "@chakra-ui/react";
-import MensProductCard from "../components/MensProductCard";
+import MensProductCard from "../../components/ujjwal/MensProductCard";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 
 import {
