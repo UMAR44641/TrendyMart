@@ -4,7 +4,7 @@ import Navbar from './components/fahad_components/Navbar';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" >
       <Navbar/>
         <AllRoutes/>
     </div>
