@@ -1,10 +1,14 @@
-import './App.css';
+import "./App.css";
+import ProductDetails from "./components/Vivek/ProductDetails";
 
 import MensShorts from './pages/MensShorts';
 
 function App() {
   return (
     <div className="App">
+
+      <ProductDetails />
+
         <MensShorts/>
 
 import AllRoutes from './pages/AllRoutes';
@@ -15,6 +19,7 @@ function App() {
     <div className="App" >
       <Navbar/>
         <AllRoutes/>
+
 
     </div>
   );
