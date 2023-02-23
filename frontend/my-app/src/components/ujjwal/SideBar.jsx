@@ -56,7 +56,7 @@ console.log(searchParams.getAll("itemType") );
     
     }, [itemType,category,price])
   return (
-    <div >
+    <div style={{margin:"0px 20px",fontWeight:"revert-layer"}}>
       <Accordion allowMultiple>
         <AccordionItem>
           <h2>
