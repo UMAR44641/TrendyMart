@@ -11,6 +11,9 @@ export default function Slider() {
   return (
     <Box  w="100%"  p="0px 15px"  >
       <Swiper
+      style={{
+        "--swiper-pagination-color": "black",
+      }}
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
