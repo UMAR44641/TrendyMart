@@ -1,11 +1,11 @@
-import './App.css';
-import MensShorts from './pages/ujjwal/MensShorts';
-// import MensShorts from './pages/MensShorts';
+
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <MensShorts/>
+
+
     </div>
   );
 }
