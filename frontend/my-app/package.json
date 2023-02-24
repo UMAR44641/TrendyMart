@@ -6,8 +6,6 @@
     "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.5.1",
     "@emotion/react": "^11.10.6",
-    "@emotion/styled": "mui/icons-material",
-    "@mui/material": "^5.11.10",
     "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -29,7 +27,12 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.6",
     "swiper": "^9.0.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "chart.js": "^3.7.0",
+    "react-chartjs-2": "^4.0.0",
+    "react-circular-progressbar": "^2.0.4",
+    "sass": "^1.48.0"
+    
   },
   "scripts": {
     "start": "react-scripts start",
