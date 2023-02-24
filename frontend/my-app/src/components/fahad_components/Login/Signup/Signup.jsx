@@ -215,7 +215,16 @@ const form={name,email,password,city,age,gender:men||women,mobile}
     isClosable: true,
     position:"top"
   });
-  closeRegister()
+  closeRegister();
+  setname("");
+  setemail("");
+  setpassword("");
+  setcity("");
+  setage("");
+  setmen("");
+  setwomen("");
+  setmobile("");
+  setgender("");
   }
  
  }
