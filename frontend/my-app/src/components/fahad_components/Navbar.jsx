@@ -15,14 +15,37 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+
+import LoginModal from './Login/LoginModal';
+import Signup from './Login/Signup/Signup';
+
+
 
 const data=[
   "Men","Women","Kids","Jewelery","Handbags","Shoes","Home","Sale","Designers","Editorial","Gifts"
 ]
 
 const Navbar = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isOn,setIsOn]=React.useState(false);
+  const [register,setRegister]=React.useState(false);
+
+ const openRegister=()=>{
+  setRegister(true)
+ }
+
+ const closeRegister=()=>{
+  setRegister(false)
+ }
+
+  const getOn=()=>{
+    setIsOn(true)
+  }
+
+  const getOff=()=>{
+    setIsOn(false)
+  }
 
   return (
     <Box position="sticky" top={0} bgColor="white" mb="15px"  zIndex="50">
@@ -89,11 +112,14 @@ const Navbar = () => {
   </InputGroup>
         </Box>
 
-        <Box flex={{lg:"0.18",base:"0.15"}}  _hover={{borderBottom:"2px solid black"}} display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}} >
-          <Text fontSize={{md:"lg",sm:"md",base:"sm"}} fontWeight={600}>Login/Signup</Text>
+        <Box flex={{lg:"0.18",base:"0.15"}} cursor="pointer"  _hover={{borderBottom:"2px solid black"}} display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}} onClick={getOn} >
+          <Text  fontSize={{md:"lg",sm:"md",base:"sm"}} fontWeight={600}>Login/Signup</Text>
         </Box>
+        <LoginModal isOn={isOn} getOn={getOn} getOff={getOff} register={register} openRegister={openRegister} closeRegister={closeRegister} />
+        <Signup register={register} openRegister={openRegister} closeRegister={closeRegister} />
+
         <Box flex={{lg:"0.05",base:"0.1"}}  display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}}>
-        <FaShoppingCart fontSize="22px"/>
+        <FaShoppingCart cursor="pointer" fontSize="22px"/>
         </Box>
       </Flex>
 
