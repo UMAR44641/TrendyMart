@@ -41,16 +41,22 @@ const LoginModal = ({isOn,getOn,getOff,register,openRegister,closeRegister}) => 
  const [error2,setError2]=React.useState(false);
 
 
- 
-
-
-
 
  const handleSubmit=(e)=>{
 e.preventDefault();
-console.log(error2)
-setError1(email==="");
-setError2(password==="")
+if(email==""&&password==""){
+ setError1(true);
+ setError2(true)
+}else if(password==""){
+setError2(true)
+}else if(email==""){
+ setError1(true)
+}else{
+ alert("Logged in Successfully");
+ getOff();
+ setEmail("");
+ setPassword("");
+}
 
 
  }
@@ -80,8 +86,9 @@ setError2(password==="")
           <Stack spacing={4}>
             <FormControl id="email" isRequired isInvalid={error1} >
               <FormLabel>Email address</FormLabel>
-              <Input type="email" focusBorderColor='black' value={email} onChange={(e)=>{
-               setEmail(e.target.value)
+              <Input type="email" focusBorderColor='black' placeholder='Enter email' value={email} onChange={(e)=>{
+               setEmail(e.target.value);
+               setError1(false) 
               }} />
               {
                error1? <FormErrorMessage>Email is required.</FormErrorMessage>:null
@@ -90,8 +97,8 @@ setError2(password==="")
             <FormControl id="password" isRequired isInvalid={error2}  >
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} focusBorderColor="black" value={password} onChange={(e)=>{
-               setPassword(e.target.value)}} />
+                <Input type={showPassword ? 'text' : 'password'} placeholder="Enter password" focusBorderColor="black" value={password} onChange={(e)=>{
+               setPassword(e.target.value) ;  setError2(false)  }} />
                
                 <InputRightElement h={'full'}>
                   <Button
