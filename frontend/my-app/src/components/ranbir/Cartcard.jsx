@@ -85,7 +85,7 @@ export const Cartcard = () => {
                 <button
                   style={{
                     margin: "20px 0 0 0",
-                    borderBottom: "1px solid pink",
+                    borderBottom: "1px solid black",
                   }}
                 >
                   Remove

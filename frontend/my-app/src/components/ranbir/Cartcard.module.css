@@ -3,9 +3,8 @@
   padding: 20px;
   flex-direction: column;
   border-bottom: 2px solid;
-  border-top: 2px;
   /* margin: 10px; */
-  width: 65%;
+  width: 100%;
 }
 
 .b2 {
