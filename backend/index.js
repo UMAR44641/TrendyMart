@@ -13,7 +13,7 @@ app.use(bodyParser({limit: '1000mb'}));
 app.use(bodyParser.urlencoded({limit: '1000mb', extended: true}));
 app.use(cors());
 app.use('/users',userRouter);
-app.use('/products',adminauthenticate,productRouter);
+app.use('/products',productRouter);
 app.use('/admins',adminRouter);
 app.get("/",(req,res)=>{
     res.send("TrendyMart")
