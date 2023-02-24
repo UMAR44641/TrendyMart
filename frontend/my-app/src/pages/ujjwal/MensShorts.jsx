@@ -32,7 +32,7 @@ const MensShorts = () => {
         setdata(res.data);
       });
   };
-
+//useeffect for rerendering
   useEffect(() => {
     const price = searchParams.getAll("price")[0];
     const paramObj = {
