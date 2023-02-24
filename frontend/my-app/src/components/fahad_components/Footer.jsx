@@ -11,6 +11,7 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from '@chakra-ui/react'
+import {AddIcon,MinusIcon} from "@chakra-ui/icons"
 
 
 const Footer = () => {
@@ -52,12 +53,19 @@ const Footer = () => {
       <Box display={{md:"none",base:"block"}} >
       <Accordion  allowMultiple>
   <AccordionItem>
+    {({isExpanded})=>(
+      <>
     <h2>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
         <Text fontWeight={600} fontSize="sm" >CUSTOMER SERVICE</Text>
         </Box>
-        <AccordionIcon />
+        {isExpanded? (
+              <MinusIcon fontSize='12px' />
+            ) : (
+              <AddIcon fontSize='12px' />
+            )}
+        
       </AccordionButton>
     </h2>
     <AccordionPanel pb={4} textAlign="left">
@@ -67,15 +75,25 @@ const Footer = () => {
           <Text cursor="pointer" _hover={{textDecoration:"underline"}}  fontSize="sm" mb="10px">Domestic Site FAQs</Text>
           <Text cursor="pointer" _hover={{textDecoration:"underline"}}  fontSize="sm" mb="10px">Shipping to India Go to US site</Text>
     </AccordionPanel>
+    </>
+    )
+}
   </AccordionItem>
 
   <AccordionItem>
+  {({isExpanded})=>(
+      <>
     <h2>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
         <Text fontWeight={600} fontSize="sm" >YOUR ORDER</Text>
         </Box>
-        <AccordionIcon />
+        {isExpanded? (
+              <MinusIcon fontSize='12px' />
+            ) : (
+              <AddIcon fontSize='12px' />
+            )}
+        
       </AccordionButton>
     </h2>
     <AccordionPanel textAlign="left" pb={4}>
@@ -84,31 +102,53 @@ const Footer = () => {
           <Text cursor="pointer" _hover={{textDecoration:"underline"}}  fontSize="sm" mb="10px">Returns & Exchanges</Text>
 
     </AccordionPanel>
+    </>
+    )
+}
   </AccordionItem>
 
   <AccordionItem>
+  {({isExpanded})=>(
+      <>
     <h2>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
         <Text fontWeight={600} fontSize="sm" >ABOUT TRENDYMART</Text>
         </Box>
-        <AccordionIcon />
+        {isExpanded? (
+              <MinusIcon fontSize='12px' />
+            ) : (
+              <AddIcon fontSize='12px' />
+            )}
+        
       </AccordionButton>
     </h2>
     <AccordionPanel pb={4}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      fagafagds
+    <Text cursor="pointer" _hover={{textDecoration:"underline"}}  fontSize="sm" mb="10px">About Us</Text>
+          <Text cursor="pointer" _hover={{textDecoration:"underline"}}  fontSize="sm" mb="10px">Be the Change</Text>
+          <Text cursor="pointer" _hover={{textDecoration:"underline"}}  fontSize="sm" mb="10px">Careers</Text>
     </AccordionPanel>
+    </>
+    )
+}
   </AccordionItem>
-</Accordion>
+      </Accordion>
+      <Box p="20px 15px">
+      <Text fontWeight={600} mb="10px" textAlign="left" fontSize="lg" >Follow US</Text>
+      <Box display="flex">
+<BsPinterest fontSize="25px" style={{marginRight:"12px",cursor:"pointer"}}/>
+<AiFillInstagram fontSize="25px" style={{marginRight:"12px",cursor:"pointer"}}/>
+<AiFillFacebook fontSize="25px" style={{marginRight:"12px",cursor:"pointer"}}/>
+<AiFillTwitterSquare fontSize="25px" style={{marginRight:"12px",cursor:"pointer"}}/>
+        </Box>
+      </Box>
       </Box>
     </Box>
-    <Box p="30px 0px">
-        <Text mb="10px" fontSize="sm">Terms of Use  &nbsp;|&nbsp;  Privacy  &nbsp;|&nbsp;  Cookie Preferences  &nbsp;|&nbsp;  Do not sell or share my personal information  &nbsp;|&nbsp;  CA Privacy Rights</Text>
-        <Text mb="10px" fontSize="sm">CA Transperency in Supply Chains Act  &nbsp;|&nbsp;  Internet Based Ads  &nbsp;|&nbsp;  Product Recalls  &nbsp;|&nbsp;  Customer Bill of Rights  &nbsp;|&nbsp;  Pricing Policy</Text>
-        <Text mb="10px" fontSize="sm">Essential Accessibility</Text>
-        <Text fontSize="sm">© 2023 Bloomingdale's. 1000 Third Avenue New York, NY 10022. Request our corporate name and address.</Text>
+    <Box p={{sm:"30px 15px",base:"20px 15px"}}>
+        <Text mb="10px" fontSize={{sm:"sm",base:"xs"}}>Terms of Use  &nbsp;|&nbsp;  Privacy  &nbsp;|&nbsp;  Cookie Preferences  &nbsp;|&nbsp;  Do not sell or share my personal information  &nbsp;|&nbsp;  CA Privacy Rights</Text>
+        <Text mb="10px" fontSize={{sm:"sm",base:"xs"}}>CA Transperency in Supply Chains Act  &nbsp;|&nbsp;  Internet Based Ads  &nbsp;|&nbsp;  Product Recalls  &nbsp;|&nbsp;  Customer Bill of Rights  &nbsp;|&nbsp;  Pricing Policy</Text>
+        <Text mb="10px" fontSize={{sm:"sm",base:"xs"}}>Essential Accessibility</Text>
+        <Text fontSize={{sm:"sm",base:"xs"}}>© 2023 Bloomingdale's. 1000 Third Avenue New York, NY 10022. Request our corporate name and address.</Text>
         
        
       </Box>
