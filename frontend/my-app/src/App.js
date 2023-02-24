@@ -1,3 +1,4 @@
+
 import './App.css';
 import AllRoutes from './pages/AllRoutes';
 import Navbar from './components/fahad_components/Navbar';
