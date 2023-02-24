@@ -1,0 +1,56 @@
+.cont1 {
+  display: flex;
+  justify-content: space-between;
+  height: 5.7 rem;
+  /* border: 2px solid; */
+}
+.q1 {
+  display: flex;
+  width: 40%;
+  justify-content: space-evenly;
+  justify-content: center;
+  align-items: center;
+}
+.but1 {
+  width: 20%;
+  /* border: 2px solid; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cart {
+  display: flex;
+  margin: 2px 0;
+  justify-content: space-evenly;
+  margin: 10px 0;
+  /* width: 60%; */
+}
+.cart1 {
+  width: 60%;
+  border-top: 2px solid;
+}
+.cart2 {
+  width: 35%;
+  border: 1px solid grey;
+  margin: 10px 0;
+  height: 30rem;
+  flex-direction: column;
+}
+.c1 {
+  display: flex;
+  margin: 5px 10px 5px 10px;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  align-items: start;
+  /* border: 2px solid; */
+}
+
+.c12 {
+  display: flex;
+  margin: 10px 10px 5px 10px;
+
+  justify-content: space-between;
+}
+.c12 a {
+  border-bottom: 2px solid;
+}
