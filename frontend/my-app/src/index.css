@@ -26,16 +26,17 @@ code {
 .swiper-button-next{
   margin-top: 0px;
   position: absolute;
-  top: 50%;
-  right: -40px;
-  width: 45px;
-  height: 45px;
+  top: 40% !important;
+  
+  right: -10px !important;
+  width: 45px ;
+  height: 45px ;
   transform: translateY(-50%);
   }
   .swiper-button-prev{
     position: absolute;
-    top: 50%;
-    left: -40px;
+    top: 40% !important;
+    left: -10px !important;
     transform: translateY(-50%);
     margin-top: 0px;
   }

@@ -15,17 +15,40 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+
+import LoginModal from './Login/LoginModal';
+import Signup from './Login/Signup/Signup';
+
+
 
 const data=[
   "Men","Women","Kids","Jewelery","Handbags","Shoes","Home","Sale","Designers","Editorial","Gifts"
 ]
 
 const Navbar = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isOn,setIsOn]=React.useState(false);
+  const [register,setRegister]=React.useState(false);
+
+ const openRegister=()=>{
+  setRegister(true)
+ }
+
+ const closeRegister=()=>{
+  setRegister(false)
+ }
+
+  const getOn=()=>{
+    setIsOn(true)
+  }
+
+  const getOff=()=>{
+    setIsOn(false)
+  }
 
   return (
-    <Box position="sticky" top={0} bgColor="white"  zIndex="50">
+    <Box position="sticky" top={0} bgColor="white" mb="15px"  zIndex="50">
       <Flex display={{lg:"flex",base:"none"}} justifyContent="flex-end" border="1px solid #E6E6E6" padding="0px 15px" >
         <Box p="7px 0px" cursor="pointer" _hover={{borderBottom:"2px solid black"}} >
           <Box borderRight="1px solid #E6E6E6" p="0px 10px">
@@ -47,8 +70,8 @@ const Navbar = () => {
         </Box>
       </Flex>
 
-      <Flex  border="1px solid black" padding="10px 15px 10px 15px"  >
-        <Box border="1px solid red" justifyContent="flex-start" alignItems="center" fontSize={{md:"25px",sm:"18px",base:"14px"}} flex="0.1" display={{base:"flex",lg:"none"}}>
+      <Flex   padding={{sm:"10px 15px 10px 15px",base:"10px 15px 0px 15px"}}  >
+        <Box  justifyContent="flex-start" alignItems="center" fontSize={{md:"25px",sm:"18px",base:"14px"}} flex="0.1" display={{base:"flex",lg:"none"}}>
           <HamburgerIcon onClick={onOpen} />
           <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
@@ -75,7 +98,7 @@ const Navbar = () => {
       </Drawer>
         </Box>
 
-        <Box border="1px solid red" flex={{lg:"0.5",base:"1"}} display="flex" justifyContent="flex-start" alignItems="center"  >
+        <Box  flex={{lg:"0.5",base:"1"}} display="flex" justifyContent="flex-start" alignItems="center"  >
           <Heading size={{md:"lg",sm:"md",base:"sm"}} fontFamily="Brush Script MT, Brush Script Std, cursive;">TrendyMart</Heading>
         </Box>
         <Box  flex="1" display={{lg:"flex",base:"none"}} justifyContent="flex-end" alignItems="flex-end" pr="15px"
@@ -89,11 +112,14 @@ const Navbar = () => {
   </InputGroup>
         </Box>
 
-        <Box flex={{lg:"0.18",base:"1"}} border="1px solid red" _hover={{borderBottom:"2px solid black"}} display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}} >
-          <Text fontSize={{md:"lg",sm:"md",base:"sm"}} fontWeight={600}>Login/Signup</Text>
+        <Box flex={{lg:"0.18",base:"0.15"}} cursor="pointer"  _hover={{borderBottom:"2px solid black"}} display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}} onClick={getOn} >
+          <Text  fontSize={{md:"lg",sm:"md",base:"sm"}} fontWeight={600}>Login/Signup</Text>
         </Box>
-        <Box flex={{lg:"0.05",base:"0.2"}} border="1px solid red" display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}}>
-        <FaShoppingCart fontSize="22px"/>
+        <LoginModal isOn={isOn} getOn={getOn} getOff={getOff} register={register} openRegister={openRegister} closeRegister={closeRegister} />
+        <Signup register={register} openRegister={openRegister} closeRegister={closeRegister} />
+
+        <Box flex={{lg:"0.05",base:"0.1"}}  display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}}>
+        <FaShoppingCart cursor="pointer" fontSize="22px"/>
         </Box>
       </Flex>
 
@@ -170,7 +196,7 @@ const Navbar = () => {
      </div>
       </div>
 
-      <Box p="0px 15px" display={{lg:"none",base:"block"}} border="1px solid black" >
+      <Box p="0px 15px"  display={{lg:"none",base:"block"}}  >
       <InputGroup w="100%" size="sm">
     <InputLeftElement
       pointerEvents='none'

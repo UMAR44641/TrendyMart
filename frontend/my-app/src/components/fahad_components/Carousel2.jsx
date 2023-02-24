@@ -76,7 +76,7 @@ const Carousel2 =()=> {
 
    
     return (
-     <Box  p="30px 15px 0px 15px" border="1px solid black">
+     <Box  p={{sm:"30px 15px 0px 15px",base:"20px 15px 0px 15px"}} >
       <Text textAlign="left" fontSize={{md:"2xl",sm:"xl",base:"lg"}} mb="25px" fontWeight={600}>BLACK OWNED AND FOUNDED BRANDS</Text>
      <Swiper
      style={{
@@ -105,8 +105,8 @@ const Carousel2 =()=> {
           spaceBetween:8
         },
         320:{
-          slidesPerView:3,
-          slidesPerGroup:3,
+          slidesPerView:2,
+          slidesPerGroup:2,
           spaceBetween:5
         }
        }}

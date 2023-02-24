@@ -97,7 +97,7 @@ function PrevArrow(props) {
   );
 }
 
-const RecommendSlider = () => {
+const RecentlySlider = () => {
   const [data, setData] = React.useState([]);
   useEffect(() => {
     getData();
@@ -114,7 +114,7 @@ const RecommendSlider = () => {
     infinite: false,
     speed: 1000,
     slidesToShow: 6,
-    slidesToScroll: 6,
+    slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
@@ -122,28 +122,28 @@ const RecommendSlider = () => {
         breakpoint: 1200,
         settings: {
           slidesToShow: 5,
-          slidesToScroll: 5,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 1000,
         settings: {
           slidesToShow: 4,
-          slidesToScroll: 4,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 816,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 570,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
         },
       },
       {
@@ -158,18 +158,20 @@ const RecommendSlider = () => {
   return (
     <div style={{ width: "75%", margin: "auto", marginTop: "50px" }}>
       <div style={{ width: "100%", margin: "auto" }}>
-        <h1 style={{ fontSize: "20px", fontWeight: "bold",marginBottom:"20px" }}>
-          RECOMMENDED FOR YOU
+        <h1
+          style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "20px" }}
+        >
+          RECENTLY VIEWED ITEMS
         </h1>
       </div>
       <Slider {...settings}>
-        {data?.slice(22, 40).map((e) => (
+        {data?.slice(41, 48).map((e) => (
           <Container>
             <div
               style={{
-                display: "flex",
+                display: "grid",
                 border: "none",
-                justifyContent: "center",
+                gridTemplateColumns:"repeat()",
                 padding: "20px 8px",
               }}
             >
@@ -211,4 +213,4 @@ const RecommendSlider = () => {
   );
 };
 
-export default RecommendSlider;
+export default RecentlySlider;
