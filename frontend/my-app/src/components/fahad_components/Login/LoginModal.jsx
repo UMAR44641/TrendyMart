@@ -63,13 +63,13 @@ setError2(true)
 
   return (
     <>
- <Modal isOpen={isOn} onClose={getOff}>
+ <Modal isOpen={isOn} onClose={getOff} size={{sm:"md",base:"xs"}} >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-          <Stack align={'center'} mt="10px">
-          <Heading fontSize={'3xl'}>Sign in to your account</Heading>
-          <Text fontSize={'md'} color={'gray.500'}>
+          <Stack align={'center'} mt={{sm:"10px",base:"15px"}}>
+          <Heading fontSize={{sm:"3xl",base:"2xl"}}>Sign in to your account</Heading>
+          <Text fontSize={{sm:"md",base:"sm"}} color={'gray.500'}>
             to enjoy all of our cool <Link color={'black'}>features</Link> ✌️
           </Text>
         </Stack>

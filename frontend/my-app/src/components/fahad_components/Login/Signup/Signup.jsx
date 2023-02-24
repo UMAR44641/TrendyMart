@@ -42,7 +42,7 @@ const Form1 = ({name,setname,email,setemail,password,setpassword,error1,seterror
  const [showPassword, setShowPassword] = React.useState(false);
  return (
    <>
-     <Heading w="100%" textAlign={'center'}  mb="4%" fontSize="3xl">
+     <Heading w="100%" textAlign={'center'}  mb="4%" fontSize={{sm:"3xl",base:"2xl"}}>
        User Registration
      </Heading>
   
@@ -92,7 +92,7 @@ const Form1 = ({name,setname,email,setemail,password,setpassword,error1,seterror
 const Form2 = ({error2,seterror2,age,setage,city,setcity,men,women,setmen,setwomen,mobile,setmobile,gender,setgender}) => {
  return (
    <>
-     <Heading w="100%" textAlign={'center'}  mb="4%" fontSize="3xl">
+     <Heading w="100%" textAlign={'center'}  mb="4%" fontSize={{sm:"3xl",base:"2xl"}}>
        User Details
      </Heading>
      <FormControl isRequired as={GridItem} colSpan={6}>
@@ -222,12 +222,12 @@ const form={name,email,password,city,age,gender:men||women,mobile}
 
   return (
     <>
-    <Modal isOpen={register} onClose={closeRegister}>
+    <Modal isOpen={register} onClose={closeRegister} size={{sm:"md",base:"xs"}}>
         <ModalOverlay />
         <ModalContent>
         <ModalCloseButton />
 
-         <ModalBody border="1px solid black"  pb="30px">
+         <ModalBody rounded={'lg'}  pb="30px">
           <Progress
           colorScheme="gray"
           hasStripe
@@ -251,12 +251,14 @@ const form={name,email,password,city,age,gender:men||women,mobile}
                 color="white"
                 variant="solid"
                 _hover={{ bgColor:"white",color:"black",border:"2px solid black",fontWeight:"bold"}}
-                w="7rem"
-                mr="5%">
+                w={{sm:"7rem",base:"4rem"}}
+                mr="5%"
+                size={{sm:"md",base:"sm"}}
+                >
                 Back
               </Button>
               <Button
-                w="7rem"
+                w={{sm:"7rem",base:"4rem"}}
                 isDisabled={step === 2}
                 onClick={() => {
                   setStep(step + 1);
@@ -270,18 +272,19 @@ const form={name,email,password,city,age,gender:men||women,mobile}
                 color="white"
                 variant="solid"
                 _hover={{ bgColor:"white",color:"black",border:"2px solid black",fontWeight:"bold"}}
+                size={{sm:"md",base:"sm"}}
                 >
                 Next
               </Button>
             </Flex>
             {step === 2 ? (
               <Button
-                w="7rem"
+              w={{sm:"7rem",base:"4rem"}}
                 bgColor="black"
                 color="white"
                 variant="solid"
                 _hover={{ bgColor:"white",color:"black",border:"2px solid black",fontWeight:"bold"}}
-       
+                size={{sm:"md",base:"sm"}}
                 onClick={handleSubmit}>
                 Submit
               </Button>
