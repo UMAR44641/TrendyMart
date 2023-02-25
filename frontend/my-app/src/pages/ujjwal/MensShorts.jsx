@@ -46,14 +46,19 @@ const MensShorts = () => {
   }, [location.search]);
 
   // console.log(data);
+  // position: fixed;
+  // bottom: 0;
+  // right: 0;
+  // width: 300px;
   return (
-    <div style={{ display: "flex" }}>
-      <Box display={{ base: "block", lg: "flex" }} p="10px" position="relative">
+    <div style={{ display: "flex"}}>
+      <div tyle={{position:"relative"}}>
+        <Box display={{ base: "block", lg: "flex" }} position="sticky" top="0px" left="20px">
         <Box flex={0.3} display={{ base: "none", lg: "block" }}>
           <SideBar />
         </Box>
       </Box>
-      <Box pl="12px" display={{ base: "flex", lg: "none"}} margin="20px 0px">
+      <Box pl="20px" display={{ base: "flex", lg: "none"}} marginTop="20px"position="sticky" width="100px" top="0px" left="20px">
         <BsFillFilterSquareFill
           onClick={onOpen}
           fontSize={20}
@@ -81,6 +86,8 @@ const MensShorts = () => {
           </DrawerContent>
         </Drawer>
       </Box>
+      </div>
+      
       <div
         style={{
           width: "75%",
@@ -136,7 +143,7 @@ const MensShorts = () => {
             ))}
           </Grid>
         </div>
-      </div>
+      </div> 
     </div>
   );
 };

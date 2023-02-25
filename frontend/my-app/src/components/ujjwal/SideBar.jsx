@@ -56,7 +56,7 @@ console.log(searchParams.getAll("itemType") );
     
     }, [itemType,category,price])
   return (
-    <div style={{margin:"0px 20px",fontWeight:"revert-layer"}}>
+    <div style={{marginLeft:"20px",fontWeight:"revert-layer"}}>
       <Accordion allowMultiple>
         <AccordionItem>
           <h2>
@@ -83,9 +83,6 @@ console.log(searchParams.getAll("itemType") );
                 <div><input type="radio" name="category" id="" value="womens" defaultChecked={category==="womens"} />
                 <label htmlFor="">Womens</label></div>
             </div>
-              {/* <button>Kids</button>
-              <button>Mens</button>
-              <button>Womens</button> */}
             </div>
           </AccordionPanel>
         </AccordionItem>
