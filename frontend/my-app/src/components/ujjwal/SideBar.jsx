@@ -69,9 +69,9 @@ console.log(price)
   }, [category, price, order]);
   return (
     <div
-      style={{ marginLeft: "20px", fontWeight: "revert-layer", width: "120%" }}
+      style={{ fontWeight: "revert-layer", width: "100%" }}
     >
-      <Accordion allowMultiple>
+      <Accordion defaultIndex={[0,1]} allowMultiple>
         <AccordionItem>
           <h2>
             <AccordionButton>
@@ -180,7 +180,7 @@ console.log(price)
             </div>
           </AccordionPanel>
         </AccordionItem>
-        <h2
+        {/* <h2
           style={{
             alignContent: "flex-start",
             display: "flex",
@@ -188,7 +188,7 @@ console.log(price)
           }}
         >
           FILTER BY
-        </h2>
+        </h2> */}
         <AccordionItem>
           <h2>
             <AccordionButton>
@@ -266,18 +266,13 @@ console.log(price)
           )}
         </AccordionItem> */}
         <AccordionItem>
-          {({ isExpanded }) => (
-            <>
+          
               <h2>
                 <AccordionButton>
-                  <Box as="span" flex="1" textAlign="left" margin="10px 0px">
-                    Fit
+                  <Box as="span" flex="1" textAlign="left" >
+                    FIT
                   </Box>
-                  {isExpanded ? (
-                    <MinusIcon fontSize="12px" />
-                  ) : (
-                    <AddIcon fontSize="12px" />
-                  )}
+                  <AccordionIcon />
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
@@ -299,8 +294,6 @@ console.log(price)
                   </div>
                 </div>
               </AccordionPanel>
-            </>
-          )}
         </AccordionItem>
         <AccordionItem>
           {({ isExpanded }) => (
@@ -308,7 +301,7 @@ console.log(price)
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left" margin="10px 0px">
-                    Fabric
+                    FABRIC
                   </Box>
                   {isExpanded ? (
                     <MinusIcon fontSize="12px" />
@@ -376,7 +369,7 @@ console.log(price)
             </>
           )}
         </AccordionItem>
-        <AccordionItem>
+        {/* <AccordionItem>
           {({ isExpanded }) => (
             <>
               <h2>
@@ -597,7 +590,7 @@ console.log(price)
               </AccordionPanel>
             </>
           )}
-        </AccordionItem>
+        </AccordionItem> */}
       </Accordion>
     </div>
   );

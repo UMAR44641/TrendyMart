@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Heading, Image, Stack, Text } from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Heading, Image, Stack, Text } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -42,24 +42,24 @@ const MensProductCard = (props) => {
 // </Card>
     <Link to={`/products/${_id}`}>
     <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
-        <div>
-                <img src={url} alt="imag" />
-        </div>
+        <Box>
+                <Image w="200px" h="280px" objectFit="cover" m="auto" src={url} alt="imag" />
+        </Box>
         <hr/>
         <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"flex-start"}}>
             <h4>{title}</h4>
-            <p style={{textAlign:"start"}}>{desc}</p>
-            <p>⭐⭐⭐⭐⭐</p>
+            <Text textAlign="start" noOfLines={1}>{desc}</Text>
+            <p style={{fontSize:"13px"}}>⭐⭐⭐⭐⭐</p>
             <span style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-            Price:<p style={{fontSize:"15px",fontWeight:"bold"}}> ₹{price}</p>
+            Price:<p style={{fontSize:"15px",fontWeight:"bold",marginLeft:"5px"}}> ₹{price}</p>
             </span>
             <span style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-            CutPrice:<p style={{fontSize:"15px",fontWeight:"bold"}}><s>₹{cutprice}</s> </p>
+            CutPrice:<p style={{fontSize:"15px",fontWeight:"bold",marginLeft:"5px"}}><s>₹{cutprice}</s> </p>
             </span>
             <div style={{display:"flex",gap:"10px"}}>
-                <div style={{border:"10px solid red"}}> </div>
-                <div style={{border:"10px solid gray"}}></div>
-                <div style={{border:"10px solid blue"}}></div>
+                <div style={{height:"15px",width:"15px",backgroundColor:"red"}}> </div>
+                <div style={{height:"15px",width:"15px",backgroundColor:"gray"}}></div>
+                <div style={{height:"15px",width:"15px",backgroundColor:"black"}}></div>
             </div>
         </div>
     </div>
