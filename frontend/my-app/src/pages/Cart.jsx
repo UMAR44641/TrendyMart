@@ -8,7 +8,7 @@ export const Cart = () => {
         <div className={styles.q1}>
           <h1
             style={{
-              fontSize: "24px",
+              fontSize: "16px",
               letterSpacing: "5px",
               wordSpacing: "5x",
             }}
