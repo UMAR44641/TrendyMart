@@ -1,8 +1,12 @@
 import React from 'react'
+import UsersC from '../components/UsersC'
 
 const Users = () => {
+ 
   return (
-    <div>Users</div>
+    <div>
+      <UsersC />
+    </div>
   )
 }
 
