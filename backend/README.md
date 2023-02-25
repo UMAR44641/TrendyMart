@@ -2,7 +2,7 @@ API's and endpoints
 
 
 
-BaseURL=
+BaseURL = https://courageous-tuxedo-dog.cyclic.app
 
 -----API ENDPOINTS-----
 
@@ -185,4 +185,39 @@ BaseURL=
     ===responses===
     1.res = {"message":"No authorization to do this task"}
     3.res = {"message":"quantity decreased by one"}  <-->[to decrease quantity]
+    4.res = {"message":error}     <----->[if any error happens]
+
+
+(xv) /orders/    <------>  {method====>GET}   <----> (to get all the orders)
+
+
+   ===request===
+    <-->req.headers.authorization=token<-->
+
+    ===responses===
+    1.res = {"message":"No authorization to do this task"}
+    2.res = [{},{},---]     <---->[array containg objects]
+    3.res = {"message":error}     <----->[if any error happens]
+
+
+
+(xvi) /orders/delete/:id   <------>  {method====>DELETE}   <----> (to delete an order)
+
+     ===request===
+    <-->req.headers.authorization=token<-->
+
+    ===responses===
+    1.res = {"message":"No authorization to do this task"}
+    {"message":"The order has been deleted successfully"}
+    4.res = {"message":error}     <----->[if any error happens]
+
+
+(xvii) /orders/upload/:userID  <------>  {method====>POST}   <----> (to checkout from cart and place order. everything in cart is deleted)
+
+     ===request===
+
+      <--->req.body=everything in cart
+
+    ===responses===
+   1. res = {"message":"Your order has been placed"}
     4.res = {"message":error}     <----->[if any error happens]
