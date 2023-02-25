@@ -5,6 +5,9 @@ import {SearchIcon} from "@chakra-ui/icons"
 import {FaShoppingCart} from "react-icons/fa"
 import "./Navbar.css"
 import {HamburgerIcon} from "@chakra-ui/icons";
+import {useSelector,useDispatch} from "react-redux";
+import { logout } from '../../redux/auth/auth.action';
+import {useNavigate} from "react-router-dom"
 
 import {
   Drawer,
@@ -30,6 +33,12 @@ const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isOn,setIsOn]=React.useState(false);
   const [register,setRegister]=React.useState(false);
+  const {isAuth}=useSelector((store)=>{
+return store.auth
+  });
+  const dispatch=useDispatch();
+  const navigate=useNavigate()
+  
 
  const openRegister=()=>{
   setRegister(true)
@@ -112,11 +121,19 @@ const Navbar = () => {
   </InputGroup>
         </Box>
 
-        <Box flex={{lg:"0.18",base:"0.15"}} cursor="pointer"  _hover={{borderBottom:"2px solid black"}} display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}} onClick={getOn} >
+       {
+        isAuth?<Box flex={{lg:"0.18",base:"0.15"}} cursor="pointer"  _hover={{borderBottom:"2px solid black"}} display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}}  >
+        <Text  fontSize={{md:"lg",sm:"md",base:"sm"}} fontWeight={600} onClick={()=>{
+          dispatch(logout());
+        }}>Logout</Text>
+      </Box>
+      :
+      <Box flex={{lg:"0.18",base:"0.15"}} cursor="pointer"  _hover={{borderBottom:"2px solid black"}} display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}} onClick={getOn} >
           <Text  fontSize={{md:"lg",sm:"md",base:"sm"}} fontWeight={600}>Login/Signup</Text>
         </Box>
+       } 
         <LoginModal isOn={isOn} getOn={getOn} getOff={getOff} register={register} openRegister={openRegister} closeRegister={closeRegister} />
-        <Signup register={register} openRegister={openRegister} closeRegister={closeRegister} />
+        <Signup getOn={getOn}  register={register} openRegister={openRegister} closeRegister={closeRegister} />
 
         <Box flex={{lg:"0.05",base:"0.1"}}  display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}}>
         <FaShoppingCart cursor="pointer" fontSize="22px"/>

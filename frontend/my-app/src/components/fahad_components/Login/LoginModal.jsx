@@ -4,14 +4,16 @@ import {
  ModalOverlay,
  ModalContent,
  ModalHeader,
- ModalFooter,
  ModalBody,
  ModalCloseButton,
  InputRightElement,
  InputGroup,
  FormErrorMessage,
- 
+ useToast
 } from '@chakra-ui/react';
+
+import { useSelector,useDispatch } from 'react-redux';
+import { login } from '../../../redux/auth/auth.action';
 
 import {
  Flex,
@@ -31,8 +33,6 @@ import {
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 
-
-
 const LoginModal = ({isOn,getOn,getOff,register,openRegister,closeRegister}) => {
  const [showPassword, setShowPassword] = React.useState(false);
  const [email,setEmail]=React.useState("");
@@ -40,9 +40,10 @@ const LoginModal = ({isOn,getOn,getOff,register,openRegister,closeRegister}) => 
  const [error1,setError1]=React.useState(false);
  const [error2,setError2]=React.useState(false);
 
+const dispatch=useDispatch();
+const toast=useToast();
 
-
- const handleSubmit=(e)=>{
+const handleSubmit= (e)=>{
 e.preventDefault();
 if(email==""&&password==""){
  setError1(true);
@@ -52,18 +53,13 @@ setError2(true)
 }else if(email==""){
  setError1(true)
 }else{
- alert("Logged in Successfully");
- getOff();
- setEmail("");
- setPassword("");
+  dispatch(login({email,password},toast,getOff,setEmail,setPassword));
 }
-
-
- }
+}
 
   return (
     <>
- <Modal isOpen={isOn} onClose={getOff} size={{sm:"md",base:"xs"}} >
+    <Modal isOpen={isOn} onClose={getOff} size={{sm:"md",base:"xs"}} >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
@@ -72,7 +68,7 @@ setError2(true)
           <Text fontSize={{sm:"md",base:"sm"}} color={'gray.500'}>
             to enjoy all of our cool <Link color={'black'}>features</Link> ✌️
           </Text>
-        </Stack>
+          </Stack>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -131,7 +127,9 @@ setError2(true)
                 Sign in
               </Button>
             </Stack>
-            <Text fontWeight={500} color="gray.500" >If not registered then please <Link color="black" onClick={()=>{
+
+            <Text fontWeight={500} color="gray.500" >If not registered then please 
+            <Link color="black" onClick={()=>{
              getOff();
              openRegister();
             }} >Signup</Link>. </Text>
@@ -140,7 +138,7 @@ setError2(true)
         </Box>
           </ModalBody>
         </ModalContent>
-      </Modal>
+    </Modal>
     </>
   )
 }
