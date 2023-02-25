@@ -20,13 +20,15 @@ import { BsFillFilterSquareFill } from "react-icons/bs";
 const MensShorts = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  console.log("locayion", location.search);
+  // console.log("locayion", location.search);
   const [data, setdata] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("left");
+  const order = searchParams.getAll("order")[0];
+
   const getData = (params) => {
     axios
-      .get("https://amazon-t415.onrender.com/products", params)
+      .get("https://courageous-tuxedo-dog.cyclic.app/products", params)
       .then((res) => {
         console.log(res.data);
         setdata(res.data);
@@ -38,8 +40,9 @@ const MensShorts = () => {
     const paramObj = {
       params: {
         category: searchParams.getAll("category"),
-        _sort: price,
-        _order: price,
+        _sort: order && "price",
+        _order: order,
+        maxprice:price
       },
     };
     getData(paramObj);
@@ -52,9 +55,9 @@ const MensShorts = () => {
   // width: 300px;
   return (
     <div style={{ display: "flex"}}>
-      <div tyle={{position:"relative"}}>
-        <Box display={{ base: "block", lg: "flex" }} position="sticky" top="0px" left="20px">
-        <Box flex={0.3} display={{ base: "none", lg: "block" }}>
+      <div style={{position:"relative",width:"20%"}}>
+        <Box display={{ base: "block", lg: "flex" }} position="sticky" top="0px" left="20px" width="100%">
+        <Box flex={0.3} display={{ base: "none", lg: "block" }} width="100%">
           <SideBar />
         </Box>
       </Box>
@@ -90,7 +93,7 @@ const MensShorts = () => {
       
       <div
         style={{
-          width: "75%",
+          width: "80%",
           padding: "10px",
           margin: "5px",
           border: "1px solid balck",
