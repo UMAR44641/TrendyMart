@@ -128,5 +128,61 @@ BaseURL=
     2.res = {"message":error}
 
 
+(x) /cart   <------>  {method====>GET}   <----> (for getting all the products in the cart of the user who is logged in)
+
+     ===request===
+    <-->req.headers.authorization=token<-->
+
+    ===responses===
+    1.res = [{},{},---]     <---->[array containg objects]
+    2.res = {"message":error}     <----->[if any error happens]
 
 
+
+(xi) /cart/upload   <------>  {method====>POST}   <----> (to add product to the cart)
+
+     ===request===
+    <-->req.headers.authorization=token<-->
+      <--->req.body={all the product keys}
+
+    ===responses===
+    1.res = {"message":"quantity in cart increased by one"}    <---->[if product is already in the cart]
+    2.res = {"message":"No authorization to do this task"}  
+    3.res = {"message":"Product has been added to the cart"}  <-->[product added to the cart]
+    4.res = {"message":error}     <----->[if any error happens]
+
+
+(xii) /cart/delete/:id   <------>  {method====>DELETE}   <----> (to remove product from the cart)
+
+     ===request===
+    <-->req.headers.authorization=token<-->
+
+    ===responses===
+    1.res = {"message":"No authorization to do this task"}
+    3.res = {"message":"item removed from cart"}  <-->[product removed from the cart]
+    4.res = {"message":error}     <----->[if any error happens]
+
+
+
+
+(xiii) /cart/increasequantity/:id   <------>  {method====>PATCH}   <----> (to increase quantity of the product)
+
+     ===request===
+    <-->req.headers.authorization=token<-->
+
+    ===responses===
+    1.res = {"message":"No authorization to do this task"}
+    3.res = {"message":"quantity increased by one"}  <-->[to increase quantity]
+    4.res = {"message":error}     <----->[if any error happens]
+
+
+
+(xiv) /cart/decreasequantity/:id   <------>  {method====>PATCH}   <----> (to decrease quantity of the product)
+
+     ===request===
+    <-->req.headers.authorization=token<-->
+
+    ===responses===
+    1.res = {"message":"No authorization to do this task"}
+    3.res = {"message":"quantity decreased by one"}  <-->[to decrease quantity]
+    4.res = {"message":error}     <----->[if any error happens]

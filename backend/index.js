@@ -6,6 +6,9 @@ const { productRouter } = require("./routes/productRoutes");
 const {adminRouter} = require('./routes/adminRoutes')
 const bodyParser=require("body-parser");
 const { adminauthenticate } = require("./middlewares/adminauthentication");
+const { cartRouter } = require("./routes/cartRoutes");
+const { userauthenticate } = require("./middlewares/userauthentication");
+const { orderRouter } = require("./routes/orderRoutes");
 require("dotenv").config();
 const app=express()
 app.use(express.json({limit: '25mb'}))
@@ -15,6 +18,8 @@ app.use(cors());
 app.use('/users',userRouter);
 app.use('/products',productRouter);
 app.use('/admins',adminRouter);
+app.use('/cart',userauthenticate,cartRouter);
+app.use('/orders',orderRouter)
 app.get("/",(req,res)=>{
     res.send("TrendyMart")
 })
