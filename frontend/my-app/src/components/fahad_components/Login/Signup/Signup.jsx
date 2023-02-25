@@ -3,8 +3,6 @@ import {
  Modal,
  ModalOverlay,
  ModalContent,
- ModalHeader,
- ModalFooter,
  ModalBody,
  ModalCloseButton,
  InputRightElement,
@@ -18,7 +16,6 @@ import {
 
 import {
  Progress,
- Box,
  ButtonGroup,
  Heading,
  Flex,
@@ -26,13 +23,7 @@ import {
  GridItem,
  FormLabel,
  Input,
- Select,
- SimpleGrid,
- InputLeftAddon,
- 
- Textarea,
- FormHelperText,
-
+ FormHelperText
 } from '@chakra-ui/react';
 
 import { useToast } from '@chakra-ui/react';
@@ -170,7 +161,7 @@ const Form2 = ({error2,seterror2,age,setage,city,setcity,men,women,setmen,setwom
 };
 
 
-const Signup = ({register,openRegister,closeRegister}) => {
+const Signup = ({register,openRegister,closeRegister,getOn}) => {
  const [name, setname] = useState("");
  const [email, setemail] = useState("");
  const [password, setpassword] = useState("");
@@ -188,8 +179,8 @@ const Signup = ({register,openRegister,closeRegister}) => {
  const [step, setStep] = useState(1);
  const [progress, setProgress] = useState(50);
 
- const handleSubmit=()=>{
-const form={name,email,password,city,age,gender:men||women,mobile}
+ const handleSubmit=async ()=>{
+  const form={name,email,password,city,age,gender:men||women,mobile}
   if(form.name==""||form.email==""||form.password==""||form.city==""||form.mobile==""||form.age==""||form.gender==""){
    toast({
     title: 'Account cannot be created.',
@@ -206,16 +197,41 @@ const form={name,email,password,city,age,gender:men||women,mobile}
   }else if(mobile.length<10){
    seterror2(true);
    }else{
-    
-   toast({
-    title: 'Account created.',
-    description: "We've created your account for you.",
-    status: 'success',
-    duration: 3000,
-    isClosable: true,
-    position:"top"
-  });
-  closeRegister();
+  fetch("https://courageous-tuxedo-dog.cyclic.app/users/register",{
+  method:"POST",
+  body:JSON.stringify(form),
+  headers:{
+    "Content-Type":"application/json"
+  }
+  }).then((res)=>{
+  return res.json();
+  }).then((res)=>{
+  if(res.message=="User already exists, please login"){
+    toast({
+      title: 'Please Login.',
+      description: "User already exists.",
+      status: 'warning',
+      duration: 3000,
+      isClosable: true,
+      position:"top"
+    });
+    closeRegister();
+    getOn()
+  }else if(res.message=="Registered successfully"){
+    toast({
+      title: 'Account created.',
+      description: "We've created your account for you.",
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+      position:"top"
+    });
+    closeRegister();
+  }
+}).catch((err)=>{
+  console.log(err)
+})
+ 
   setname("");
   setemail("");
   setpassword("");
