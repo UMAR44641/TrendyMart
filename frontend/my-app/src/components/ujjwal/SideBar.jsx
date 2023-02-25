@@ -15,11 +15,14 @@ import { useSearchParams } from 'react-router-dom';
 export const SideBar = () => {
     const [searchParams,setSearchParams]=useSearchParams()
     const initialState=searchParams.getAll("itemType")
-    const initialPrice=searchParams.getAll("price")
+    const initialPrice=searchParams.getAll("maxprice")
     const initialcategory=searchParams.getAll("category")
+    const initialOrder=searchParams.getAll("sort")
     const [itemType,setitemType]=useState(initialState||[])
     const [price,setprice]=useState(initialPrice||[])
     const [category,setcategory]=useState(initialcategory[0]||"")
+    const [order,setOrder]=useState(initialOrder[0]||"")
+
     // console.log(itemType);//
 console.log(searchParams.getAll("itemType") );
 
@@ -33,6 +36,9 @@ console.log(searchParams.getAll("itemType") );
         }
         setitemType(newitemType)
     }
+    const handelSort=(e)=>{
+      setOrder(e.target.value)
+  }
     const handelPrice=(e)=>{
         let newiPrice=[...price]
 
@@ -51,12 +57,13 @@ console.log(searchParams.getAll("itemType") );
             itemType
         }
         category&&(params.category=category)
-        price&&(params.price=price)
+        price&&(params.maxprice=price)
+        order&&(params.sort=order)
         setSearchParams(params)
     
-    }, [itemType,category,price])
+    }, [itemType,category,price,order])
   return (
-    <div style={{margin:"0px 20px",fontWeight:"revert-layer"}}>
+    <div style={{marginLeft:"20px",fontWeight:"revert-layer",width:"180%"}}>
       <Accordion allowMultiple>
         <AccordionItem>
           <h2>
@@ -75,7 +82,7 @@ console.log(searchParams.getAll("itemType") );
                 alignItems: "flex-start",
               }}
             >
-            <div onChange={handelCategory}>
+            <div onChange={handelCategory} style={{display:"flex",flexDirection:"column",alignItems:"start"}}>
                 <div><input type="radio" name="category" id=""  value="kids" defaultChecked={category==="kids"}/>
                 <label htmlFor="">Kids</label></div>
                 <div><input type="radio" name="category" id="" value="mens" defaultChecked={category==="mens"} />
@@ -83,64 +90,40 @@ console.log(searchParams.getAll("itemType") );
                 <div><input type="radio" name="category" id="" value="womens" defaultChecked={category==="womens"} />
                 <label htmlFor="">Womens</label></div>
             </div>
-              {/* <button>Kids</button>
-              <button>Mens</button>
-              <button>Womens</button> */}
+            </div>
+          </AccordionPanel>
+        </AccordionItem>
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box as="span" flex="1" textAlign="left">
+                SORT BY
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+            >
+           <div onChange={handelSort} style={{display:"flex",flexDirection:"column",alignItems:"start"}}>
+                <div>
+                <input type="radio" name="sort_by" id=""  value="asc" defaultChecked={order==="asc"}/>
+                <label htmlFor="">Ascending</label>
+                </div>
+                <div><input type="radio" name="sort_by" id="" value="desc" defaultChecked={order==="desc"} />
+                <label htmlFor="">Decending</label></div>
+            </div>
             </div>
           </AccordionPanel>
         </AccordionItem>
         <h2 style={{ alignContent: "flex-start", display: "flex",margin:"10px 15px" }}>
           FILTER BY
         </h2>
-        <AccordionItem >
-          {({ isExpanded }) => (
-            <>
-              <h2>
-                <AccordionButton>
-                  <Box as="span" flex="1" textAlign="left" margin="10px 0px">
-                    ITEM TYPE
-                  </Box>
-                  {isExpanded ? (
-                    <MinusIcon fontSize="12px" />
-                  ) : (
-                    <AddIcon fontSize="12px" />
-                  )}
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "start",
-                    fontSize:"18px"
-                  }}
-                >
-                  <div style={{ margin: "10px" }}>
-                    <input type="checkbox"  value="Blazers" onChange={handelFilter} checked={itemType.includes("Blazers")}/>
-                    <label for="scales"> Blazers</label>
-                  </div>
-                  <div style={{ margin: "10px" }}>
-                    <input type="checkbox" value="Coats" onChange={handelFilter} checked={itemType.includes("Coats")} />
-                    <label for="scales"> Coats</label>
-                  </div>
-                  <div style={{ margin: "10px" }}>
-                    <input type="checkbox" value="Dresses" onChange={handelFilter} checked={itemType.includes("Dresses")} />
-                    <label for="scales"> Dresses</label>
-                  </div>
-                  <div style={{ margin: "10px" }}>
-                    <input type="checkbox" value="Jackets" onChange={handelFilter} checked={itemType.includes("Jackets")} />
-                    <label for="scales"> Jackets</label>
-                  </div>
-                  <div style={{ margin: "10px" }}>
-                    <input type="checkbox" value="Jeans" onChange={handelFilter} checked={itemType.includes("Jeans")} />
-                    <label for="scales"> Jeans</label>
-                  </div>
-                </div>
-              </AccordionPanel>
-            </>
-          )}
-        </AccordionItem>
         <AccordionItem>
           {({ isExpanded }) => (
             <>
@@ -183,6 +166,48 @@ console.log(searchParams.getAll("itemType") );
             </>
           )}
         </AccordionItem>
+        {/* <AccordionItem>
+          {({ isExpanded }) => (
+            <>
+              <h2>
+                <AccordionButton>
+                  <Box as="span" flex="1" textAlign="left" margin="10px 0px">
+                   Price
+                  </Box>
+                  {isExpanded ? (
+                    <MinusIcon fontSize="12px" />
+                  ) : (
+                    <AddIcon fontSize="12px" />
+                  )}
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                    fontSize:"18px"
+                  }}
+                >
+                  <div style={{ margin: "10px"}}>
+                    <input type="checkbox"  name="price" value="200" onChange={handelPrice} checked={price.includes("200")}  />
+                    <label for="scales"> 200</label>
+                  </div>
+                  <div style={{ margin: "10px"}}>
+                    <input type="checkbox"  name="price" value="800" onChange={handelPrice} checked={price.includes("800")} />
+                    <label for="scales"> 800</label>
+                  </div>
+                  <div style={{ margin: "10px"}}>
+                    <input type="checkbox"  name="price" value="1500" onChange={handelPrice} checked={price.includes("1500")} />
+                    <label for="scales"> 1500</label>
+                  </div>
+                  
+                </div>
+              </AccordionPanel>
+            </>
+          )}
+        </AccordionItem> */}
         <AccordionItem>
           {({ isExpanded }) => (
             <>

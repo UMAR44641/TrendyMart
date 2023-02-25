@@ -20,40 +20,48 @@ import { BsFillFilterSquareFill } from "react-icons/bs";
 const MensShorts = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  console.log("locayion", location.search);
+  // console.log("locayion", location.search);
   const [data, setdata] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("left");
+  const order = searchParams.getAll("order")[0];
+
   const getData = (params) => {
     axios
-      .get("https://amazon-t415.onrender.com/products", params)
+      .get("https://courageous-tuxedo-dog.cyclic.app/products", params)
       .then((res) => {
         console.log(res.data);
         setdata(res.data);
       });
   };
-
+//useeffect for rerendering
   useEffect(() => {
     const price = searchParams.getAll("price")[0];
     const paramObj = {
       params: {
         category: searchParams.getAll("category"),
-        _sort: price,
-        _order: price,
+        _sort: order && "price",
+        _order: order,
+        maxprice:price
       },
     };
     getData(paramObj);
   }, [location.search]);
 
   // console.log(data);
+  // position: fixed;
+  // bottom: 0;
+  // right: 0;
+  // width: 300px;
   return (
-    <div style={{ display: "flex" }}>
-      <Box display={{ base: "block", lg: "flex" }} p="10px" position="relative">
-        <Box flex={0.3} display={{ base: "none", lg: "block" }}>
+    <div style={{ display: "flex"}}>
+      <div style={{position:"relative",width:"20%"}}>
+        <Box display={{ base: "block", lg: "flex" }} position="sticky" top="0px" left="20px" width="100%">
+        <Box flex={0.3} display={{ base: "none", lg: "block" }} width="100%">
           <SideBar />
         </Box>
       </Box>
-      <Box pl="12px" display={{ base: "flex", lg: "none"}} margin="20px 0px">
+      <Box pl="20px" display={{ base: "flex", lg: "none"}} marginTop="20px"position="sticky" width="100px" top="0px" left="20px">
         <BsFillFilterSquareFill
           onClick={onOpen}
           fontSize={20}
@@ -81,9 +89,11 @@ const MensShorts = () => {
           </DrawerContent>
         </Drawer>
       </Box>
+      </div>
+      
       <div
         style={{
-          width: "75%",
+          width: "80%",
           padding: "10px",
           margin: "5px",
           border: "1px solid balck",
@@ -136,7 +146,7 @@ const MensShorts = () => {
             ))}
           </Grid>
         </div>
-      </div>
+      </div> 
     </div>
   );
 };
