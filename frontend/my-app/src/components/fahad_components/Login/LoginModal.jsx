@@ -132,7 +132,7 @@ setError2(true)
             <Link color="black" onClick={()=>{
              getOff();
              openRegister();
-            }} >Signup</Link>. </Text>
+            }} > Signup</Link>. </Text>
            
           </Stack>
         </Box>
