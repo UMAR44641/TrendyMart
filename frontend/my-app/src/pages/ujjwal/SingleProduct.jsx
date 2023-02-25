@@ -3,7 +3,7 @@ import ProductDetails from '../../components/Vivek/ProductDetails'
 
 const SingleProduct = () => {
   return (
-    <div>singleProduct
+    <div>
         <ProductDetails/>
     </div>
   )

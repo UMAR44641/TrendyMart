@@ -28,15 +28,32 @@ import "./details.css"
 import {MinusIcon,AddIcon} from "@chakra-ui/icons"
 import RecommendSlider from "./Slider";
 import RecentlySlider from "./RecentlySlider";
+import { useParams } from "react-router-dom";
+
 
 
 const ProductDetails = () => {
+  const {id} = useParams()
   const toast = useToast();
   const [active,setActive] = useState(null)
   const [activeColor, setActiveColor] = useState(null);
   const [disable,setDisable] = useState(false)
   const [text,setText] = useState("")
   const [colorText, setColorText] = useState("Red");
+  const [product,setProduct] = useState({})
+  console.log({id})
+  const getProduct=async()=>{
+    let res = await fetch(
+      `https://courageous-tuxedo-dog.cyclic.app/products/${id}`
+    );
+    res = await res.json()
+    setProduct(res)
+    // console.log(res)
+  }
+  useEffect(()=>{
+    getProduct()
+  },[id])
+  const {url,title,desc,price,category,cutprice} = product
   function handleButtonClick(button,buttonText){
     setActive(button)
     setDisable(true)
@@ -46,38 +63,67 @@ const ProductDetails = () => {
     setColorText(color);
     setActiveColor(button);
   }
+  const addProduct=async()=>{
+        let data ={
+          url:url,
+          title:title,
+          desc:desc,
+          category:category,
+          price:price,
+          cutprice:cutprice,
+          id:id,
+          quantity:1
+        }
+        let res = await fetch(
+          "https://courageous-tuxedo-dog.cyclic.app/cart/upload",
+          {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-type": "application/json",
+              Authorization: localStorage.getItem("token"),
+            },
+          }
+        );
+        res = await res.json();
+        console.log(res)
+  }
+  const handleBag=()=>{
+    onOpen()
+    addProduct()
+  }
   
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const btnRef = React.useRef();
     const [data,setData] = useState([])
     const getData=async()=>{
-    let res = await fetch("https://amazon-t415.onrender.com/products?category=mens");
+    let res = await fetch(
+      `https://courageous-tuxedo-dog.cyclic.app/products?category=${category}`
+    );
     res = await res.json()
+    // console.log(res)
     setData(res)
     }
     useEffect(()=>{
            getData()
-    },[])
+    },[category])
   return (
     <div>
       <div className="container">
         <div className="imageBox">
-          <img
-            src="https://images.bloomingdalesassets.com/is/image/BLM/products/4/optimized/12683554_fpx.tif?op_sharpen=1&wid=700&fit=fit,1&$filtersm$&fmt=webp"
-            alt=""
-          />
+          <img style={{margin:"auto",height:"600px"}} src={url} alt="" />
         </div>
         <div className="detail">
           <div style={{ textAlign: "left" }}>
-            <h1 style={{ fontWeight: "bold" }}>Peter Millar</h1>
-            <p>Crest Solid Regular Fit Quarter Zip Sweater</p>
+            <h1 style={{ fontWeight: "bold" }}>{title}</h1>
+            <p>{desc}</p>
           </div>
           <div
             style={{ display: "flex", alignItems: "center", marginTop: "45px" }}
           >
             <h1 style={{ marginRight: "5px" }}>INR</h1>
-            <p style={{ marginRight: "10px" }}>15826.00</p>
+            <p style={{ marginRight: "10px" }}>{price}</p>
             <p style={{ borderBottom: "1px solid" }}>Details</p>
           </div>
           <div
@@ -284,7 +330,7 @@ const ProductDetails = () => {
             ref={btnRef}
             type="button"
             isDisabled={!disable}
-            onClick={onOpen}
+            onClick={handleBag}
             rounded={"none"}
             w={"full"}
             mt={6}
@@ -434,7 +480,7 @@ const ProductDetails = () => {
         </div>
       </div>
       <hr className="hr" />
-      <RecommendSlider />
+      <RecommendSlider category ={category} />
       <hr className="hr" />
       <Accordion
         allowMultiple
@@ -484,7 +530,10 @@ const ProductDetails = () => {
         </AccordionItem>
       </Accordion>
       <hr className="hr" />
-      <RecentlySlider />
+      <div>
+        <RecentlySlider/>
+
+      </div>
       <hr className="hr" />
       <Drawer
         isOpen={isOpen}
@@ -501,14 +550,14 @@ const ProductDetails = () => {
           <DrawerBody>
             <Center>
               <Image
-                src="https://images.bloomingdalesassets.com/is/image/BLM/products/8/optimized/11929298_fpx.tif?op_sharpen=1&wid=100&fit=fit,1&$filterlrg$"
+                src={url}
                 style={{ margin: "auto" }}
               />
             </Center>
             <Center mt={5}>1 item added:</Center>
             <Center mt={1}>
               <p style={{ color: "black", fontWeight: "bold" }}>Total</p>: INR
-              11,533.00
+               {" "}{price}
             </Center>
             <Button
               ref={btnRef}

@@ -97,14 +97,14 @@ function PrevArrow(props) {
   );
 }
 
-const RecommendSlider = () => {
+const RecommendSlider = ({category}) => {
   const [data, setData] = React.useState([]);
   useEffect(() => {
     getData();
-  }, []);
+  }, [category]);
   const getData = async () => {
     let res = await fetch(
-      `https://amazon-t415.onrender.com/products?category=mens`
+      `https://amazon-t415.onrender.com/products?category=${category}`
     );
     res = await res.json();
     setData(res);
