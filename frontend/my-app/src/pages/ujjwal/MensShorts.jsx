@@ -54,29 +54,28 @@ const MensShorts = () => {
   // right: 0;
   // width: 300px;
   return (
-    <div style={{ display: "flex"}}>
-      <div style={{position:"relative",width:"20%"}}>
-        <Box display={{ base: "block", lg: "flex" }} position="sticky" top="0px" left="20px" width="100%">
+    <div style={{ display: "flex",gap:"5px"}}>
+      <div style={{position:"relative",width:"25%"}}>
+        <Box display={{ base: "block", lg: "flex" }} position="sticky" top="0px" left="20px" width="200%">
         <Box flex={0.3} display={{ base: "none", lg: "block" }} width="100%">
           <SideBar />
         </Box>
       </Box>
-      <Box pl="20px" display={{ base: "flex", lg: "none"}} marginTop="20px"position="sticky" width="100px" top="0px" left="20px">
+      <Box pl="20px" display={{ base: "flex", lg: "none"}} marginTop="20px"position="sticky" width="80px" top="100px" left="10px">
         <BsFillFilterSquareFill
           onClick={onOpen}
           fontSize={20}
           color="#E40046"
           
         />
-        <Text
+        {/* <Text
           onClick={onOpen}
           cursor="pointer"
           fontSize="20px"
           fontWeight="bold"
           ml="7px"
         >
-          Filter
-        </Text>
+        </Text> */}
         <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
           <DrawerOverlay />
           <DrawerContent>
