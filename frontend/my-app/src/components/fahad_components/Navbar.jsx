@@ -33,16 +33,17 @@ const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isOn,setIsOn]=React.useState(false);
   const [register,setRegister]=React.useState(false);
+
   const {isAuth}=useSelector((store)=>{
-return store.auth
+   return store.auth
   });
   const dispatch=useDispatch();
-  const navigate=useNavigate()
-  
-
- const openRegister=()=>{
+  let loginData=JSON.parse(localStorage.getItem("loginData"))||"";
+  let name=loginData?loginData.name:"";
+;
+  const openRegister=()=>{
   setRegister(true)
- }
+  } 
 
  const closeRegister=()=>{
   setRegister(false)
@@ -113,29 +114,33 @@ return store.auth
         <Box  flex="1" display={{lg:"flex",base:"none"}} justifyContent="flex-end" alignItems="flex-end" pr="15px"
          >
         <InputGroup w="300px" size="sm">
-    <InputLeftElement
-      pointerEvents='none'
-      children={<SearchIcon/>}
-    />
-    <Input type='text' placeholder='Search' variant="flushed" borderBottom="1px solid black" focusBorderColor='1px solid black' />
-  </InputGroup>
+        <InputLeftElement
+        pointerEvents='none'
+        children={<SearchIcon/>}
+        />
+        <Input type='text' placeholder='Search' variant="flushed" borderBottom="1px solid black" focusBorderColor='1px solid black' />
+        </InputGroup>
         </Box>
 
+        {isAuth?<Box mr={{lg:"0px",base:"7px"}} flex={{lg:"0.20",sm:"0.4",base:"0.85"}}    display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}}  >
+        <Text  fontSize={{md:"md",sm:"sm",base:"sm"}} fontWeight={600}>Hi {name}!</Text>
+        </Box>:null}
+
        {
-        isAuth?<Box flex={{lg:"0.18",base:"0.15"}} cursor="pointer"  _hover={{borderBottom:"2px solid black"}} display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}}  >
+        isAuth?<Box  flex={{lg:"0.1",base:"0.08"}} cursor="pointer"  _hover={{borderBottom:"2px solid black"}} display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}} mr="5px" >
         <Text  fontSize={{md:"lg",sm:"md",base:"sm"}} fontWeight={600} onClick={()=>{
           dispatch(logout());
         }}>Logout</Text>
-      </Box>
-      :
-      <Box flex={{lg:"0.18",base:"0.15"}} cursor="pointer"  _hover={{borderBottom:"2px solid black"}} display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}} onClick={getOn} >
+        </Box>
+        :
+        <Box flex={{lg:"0.18",base:"0.15"}} cursor="pointer"  _hover={{borderBottom:"2px solid black"}} display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}} mr={{md:"0px",base:"5px"}} onClick={getOn} >
           <Text  fontSize={{md:"lg",sm:"md",base:"sm"}} fontWeight={600}>Login/Signup</Text>
         </Box>
        } 
         <LoginModal isOn={isOn} getOn={getOn} getOff={getOff} register={register} openRegister={openRegister} closeRegister={closeRegister} />
         <Signup getOn={getOn}  register={register} openRegister={openRegister} closeRegister={closeRegister} />
 
-        <Box flex={{lg:"0.05",base:"0.1"}}  display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}}>
+        <Box flex={{lg:"0.05",base:"0.05"}}  display="flex" alignItems="center" justifyContent={{lg:"center",base:"flex-end"}}>
         <FaShoppingCart cursor="pointer" fontSize="22px"/>
         </Box>
       </Flex>
