@@ -6,10 +6,11 @@ const AllRoute = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<SidebarWithHeader />} />
-        <Route path="/products" element={<SidebarWithHeader />} />
-        <Route path="/users" element={<SidebarWithHeader />} />
-        <Route path="/login" element={<SidebarWithHeader />} />
+        <Route path="/"  />
+        <Route path="/signup"  />
+        <Route path="/products"  />
+        <Route path="/users"  />
+        <Route path="/dashboard"  />
       </Routes>
     </div>
   );

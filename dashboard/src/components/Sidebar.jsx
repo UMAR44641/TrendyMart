@@ -29,11 +29,11 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 import { Link,useLocation } from "react-router-dom";
-import ProductCard from "./ProductCard";
 import ProductsPage from "../Pages/ProductPage";
 import Dashboard from "../Pages/Dashboard";
 import Login from "../Pages/Login";
 import Users from "../Pages/Users";
+import Signup from "../Pages/Signup";
 
 
 
@@ -41,7 +41,7 @@ const LinkItems = [
   {
     name: "Dashboard",
     icon: FiHome,
-    path: "/",
+    path: "/dashboard",
   },
   { name: "Users", icon: FiTrendingUp, path: "/users" },
   {
@@ -49,7 +49,7 @@ const LinkItems = [
     icon: FiCompass,
     path: "/products",
   },
-  { name: "Login", icon: FiStar, path: "/login" },
+  { name: "Login", icon: FiStar, path: "/" },
 ];
 
 export default function SidebarWithHeader() {
@@ -78,14 +78,18 @@ export default function SidebarWithHeader() {
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {location.pathname === "/products" ? (
-          <ProductsPage/>
+          <ProductsPage />
         ) : location.pathname === "/" ? (
-          <Dashboard/>
-        ) :location.pathname === "/users" ? (
-          <Users/>
-        ):location.pathname === "/login" ?(
-          <Login/>
-        ):""}
+          <Login />
+        ) : location.pathname === "/signup" ? (
+          <Signup />
+        ) : location.pathname === "/users" ? (
+          <Users />
+        ) : location.pathname === "/dashboard" ? (
+          <Dashboard />
+        ) : (
+          ""
+        )}
       </Box>
     </Box>
   );
