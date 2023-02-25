@@ -97,18 +97,19 @@ function PrevArrow(props) {
   );
 }
 
-const RecentlySlider = () => {
+const RecentlySlider = ({category}) => {
   const [data, setData] = React.useState([]);
-  useEffect(() => {
-    getData();
-  }, []);
+ 
   const getData = async () => {
     let res = await fetch(
-      `https://amazon-t415.onrender.com/products?category=mens`
+      `https://amazon-t415.onrender.com/products?category=${category}`
     );
     res = await res.json();
     setData(res);
   };
+   useEffect(() => {
+     getData();
+   }, [category]);
 
   const settings = {
     infinite: false,
