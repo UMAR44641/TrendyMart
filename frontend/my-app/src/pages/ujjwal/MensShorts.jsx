@@ -54,28 +54,26 @@ const MensShorts = () => {
   // right: 0;
   // width: 300px;
   return (
-    <div style={{ display: "flex",gap:"5px"}}>
-      <div style={{position:"relative",width:"25%"}}>
-        <Box display={{ base: "block", lg: "flex" }} position="sticky" top="0px" left="20px" width="200%">
-        <Box flex={0.3} display={{ base: "none", lg: "block" }} width="100%">
+    <div style={{ display: "flex",gap:"5px",padding:"0px 15px"}}>
+      <Box  position="relative" width="25%"  display={{ base: "none", lg: "block" }}>
+        <Box display={{ base: "none", lg: "block" }}  position="sticky" top="138px" left="20px" width="100%">
+        <Box width="100%" display={{ base: "none", lg: "block" }}  >
           <SideBar />
         </Box>
       </Box>
-      <Box pl="20px" display={{ base: "flex", lg: "none"}} marginTop="20px"position="sticky" width="80px" top="100px" left="10px">
+     
+      </Box>
+      
+      <Box width={{lg:"75%",base:"100%"}} pb="10px" pt="7px" >
+         <Box  display={{ base: "flex", lg: "none"}}  width="100%" mb="10px" alignItems="center" >
         <BsFillFilterSquareFill
           onClick={onOpen}
-          fontSize={20}
+          fontSize={23}
           color="#E40046"
           
         />
-        {/* <Text
-          onClick={onOpen}
-          cursor="pointer"
-          fontSize="20px"
-          fontWeight="bold"
-          ml="7px"
-        >
-        </Text> */}
+        <Text fontSize="xl" ml="10px" fontWeight={700}>Filter</Text>
+        
         <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
           <DrawerOverlay />
           <DrawerContent>
@@ -88,27 +86,18 @@ const MensShorts = () => {
           </DrawerContent>
         </Drawer>
       </Box>
-      </div>
-      
-      <div
-        style={{
-          width: "80%",
-          padding: "10px",
-          margin: "5px",
-          border: "1px solid balck",
-        }}
-      >
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
-            margin: "20px",
+            marginBottom:"30px",
+            
           }}
         >
-          <div>WOMEN'S CLOTHING (1-60 of 846 Items)</div>
-          <div style={{ display: "flex" }}>
-            <div>
-              <label style={{ fontWeight: "bolder" }}>Sort By:</label>
+          <Box fontSize="20px" >Products (1-60 of 846 Items)</Box>
+          <Box display={{lg:"flex",base:"none"}}>
+            <div style={{display:"flex",alignItems:"center"}} >
+              <label style={{ fontWeight: "bolder",marginRight:"7px" }}>Sort By:</label>
               <select name="cars" id="cars">
                 <option value="volvo">Featured</option>
                 <option value="saab">New Arrival</option>
@@ -117,8 +106,8 @@ const MensShorts = () => {
                 <option value="audi">Price(low-high)</option>
               </select>
             </div>
-            <div>
-              <label style={{ fontWeight: "bolder" }}>Page:</label>
+            <div style={{display:"flex",alignItems:"center",marginLeft:"20px"}}>
+              <label style={{ fontWeight: "bolder",marginRight:"7px" }}>Page:</label>
               <select name="cars" id="cars">
                 <option value="volvo">Featured</option>
                 <option value="saab">New Arrival</option>
@@ -127,9 +116,9 @@ const MensShorts = () => {
                 <option value="audi">Price(low-high)</option>
               </select>
             </div>
-          </div>
+          </Box>
         </div>
-        <div>
+        <div  >
           <Grid
             templateColumns={{
               base: `repeat(1,1fr)`,
@@ -145,7 +134,7 @@ const MensShorts = () => {
             ))}
           </Grid>
         </div>
-      </div> 
+      </Box> 
     </div>
   );
 };
