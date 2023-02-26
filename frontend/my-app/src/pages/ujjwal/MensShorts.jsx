@@ -44,8 +44,8 @@ useEffect(()=>{
   getData(paramobj)
 },[])
   useEffect(() => {
-    const price1 = +searchParams.getAll("maxprice")[0];
-    const price2 = +searchParams.getAll("minprice")[0];
+    const price1 = +searchParams.getAll("maxprice")[0]||"";
+    const price2 = +searchParams.getAll("minprice")[0]||"";
     const sort = searchParams.getAll("sort")[0];
     const paramObj = {
       params: {
