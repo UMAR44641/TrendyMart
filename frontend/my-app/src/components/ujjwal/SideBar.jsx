@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
-import { Box } from "@chakra-ui/react";
+import {
+  Box,
+  RangeSlider,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  RangeSliderTrack,
+} from "@chakra-ui/react";
 
 import {
   Accordion,
@@ -9,55 +15,63 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from "@chakra-ui/react";
-import { useSearchParams } from 'react-router-dom';
-
+import { useSearchParams } from "react-router-dom";
 
 export const SideBar = () => {
-    const [searchParams,setSearchParams]=useSearchParams()
-    const initialState=searchParams.getAll("itemType")
-    const initialPrice=searchParams.getAll("price")
-    const initialcategory=searchParams.getAll("category")
-    const [itemType,setitemType]=useState(initialState||[])
-    const [price,setprice]=useState(initialPrice||[])
-    const [category,setcategory]=useState(initialcategory[0]||"")
-    // console.log(itemType);//
-console.log(searchParams.getAll("itemType") );
+  const [searchParams, setSearchParams] = useSearchParams();
+  // const initialState = searchParams.getAll("itemType");
+  // const initialPrice = searchParams.getAll("");
+  const initialcategory = searchParams.getAll("category");
+  const initialOrder = searchParams.getAll("sort");
+  // const [itemType, setitemType] = useState(initialState || []);
+  const [price, setprice] = useState([100,800]);
+  const [category, setcategory] = useState(initialcategory[0] || "");
+  const [order, setOrder] = useState(initialOrder[0] || "");
+// console.log(price)
+  // console.log(itemType);//
+  // console.log(searchParams.getAll("itemType"));
 
-    const handelFilter=(e)=>{
-        let newitemType=[...itemType]
+  // const handelFilter = (e) => {
+  //   let newitemType = [...itemType];
 
-        if(newitemType.includes(e.target.value)){
-            newitemType.splice(newitemType.indexOf(e.target.value),1)
-        }else{
-            newitemType.push(e.target.value)
-        }
-        setitemType(newitemType)
-    }
-    const handelPrice=(e)=>{
-        let newiPrice=[...price]
+  //   if (newitemType.includes(e.target.value)) {
+  //     newitemType.splice(newitemType.indexOf(e.target.value), 1);
+  //   } else {
+  //     newitemType.push(e.target.value);
+  //   }
+  //   setitemType(newitemType);
+  // };
+  const handelSort = (e) => {
+    setOrder(e.target.value);
+  };
+  // const handelPrice = (e) => {
+  //   let newiPrice = [...price];
 
-        if(newiPrice.includes(e.target.value)){
-            newiPrice.splice(newiPrice.indexOf(e.target.value),1)
-        }else{
-            newiPrice.push(e.target.value)
-        }
-        setprice(newiPrice)
-    }
-    const handelCategory=(e)=>{
-        setcategory(e.target.value)
-    }
-    useEffect(() => {
-        const params={
-            itemType
-        }
-        category&&(params.category=category)
-        price&&(params.price=price)
-        setSearchParams(params)
-    
-    }, [itemType,category,price])
+  //   if (newiPrice.includes(e.target.value)) {
+  //     newiPrice.splice(newiPrice.indexOf(e.target.value), 1);
+  //   } else {
+  //     newiPrice.push(e.target.value);
+  //   }
+  //   setprice(newiPrice);
+  // };
+  const handelCategory = (e) => {
+    setcategory(e.target.value);
+  };
+  useEffect(() => {
+    const params = {
+      // itemType,
+    };
+    category && (params.category = category);
+    price && (params.maxprice = +price[1]);
+    price && (params.minprice = +price[0]);
+    order && (params.sort = order);
+    setSearchParams(params);
+  }, [category, price, order]);
   return (
-    <div style={{margin:"0px 20px",fontWeight:"revert-layer"}}>
-      <Accordion allowMultiple>
+    <div
+      style={{ fontWeight: "revert-layer", width: "100%" }}
+    >
+      <Accordion defaultIndex={[0,1,2]} allowMultiple>
         <AccordionItem>
           <h2>
             <AccordionButton>
@@ -75,73 +89,142 @@ console.log(searchParams.getAll("itemType") );
                 alignItems: "flex-start",
               }}
             >
-            <div onChange={handelCategory}>
-                <div><input type="radio" name="category" id=""  value="kids" defaultChecked={category==="kids"}/>
-                <label htmlFor="">Kids</label></div>
-                <div><input type="radio" name="category" id="" value="mens" defaultChecked={category==="mens"} />
-                <label htmlFor="">Mens</label></div>
-                <div><input type="radio" name="category" id="" value="womens" defaultChecked={category==="womens"} />
-                <label htmlFor="">Womens</label></div>
-            </div>
-              {/* <button>Kids</button>
-              <button>Mens</button>
-              <button>Womens</button> */}
+              <div
+                onChange={handelCategory}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "start",
+                }}
+              >
+                <div>
+                  <input
+                    type="radio"
+                    name="category"
+                    id=""
+                    value="kids"
+                    defaultChecked={category === "kids"}
+                  />
+                  <label >Kids</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="category"
+                    id=""
+                    value="mens"
+                    defaultChecked={category === "mens"}
+                  />
+                  <label >Mens</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="category"
+                    id=""
+                    value="womens"
+                    defaultChecked={category === "womens"}
+                  />
+                  <label >Womens</label>
+                </div>
+              </div>
             </div>
           </AccordionPanel>
         </AccordionItem>
-        <h2 style={{ alignContent: "flex-start", display: "flex",margin:"10px 15px" }}>
-          FILTER BY
-        </h2>
-        <AccordionItem >
-          {({ isExpanded }) => (
-            <>
-              <h2>
-                <AccordionButton>
-                  <Box as="span" flex="1" textAlign="left" margin="10px 0px">
-                    ITEM TYPE
-                  </Box>
-                  {isExpanded ? (
-                    <MinusIcon fontSize="12px" />
-                  ) : (
-                    <AddIcon fontSize="12px" />
-                  )}
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "start",
-                    fontSize:"18px"
-                  }}
-                >
-                  <div style={{ margin: "10px" }}>
-                    <input type="checkbox"  value="Blazers" onChange={handelFilter} checked={itemType.includes("Blazers")}/>
-                    <label for="scales"> Blazers</label>
-                  </div>
-                  <div style={{ margin: "10px" }}>
-                    <input type="checkbox" value="Coats" onChange={handelFilter} checked={itemType.includes("Coats")} />
-                    <label for="scales"> Coats</label>
-                  </div>
-                  <div style={{ margin: "10px" }}>
-                    <input type="checkbox" value="Dresses" onChange={handelFilter} checked={itemType.includes("Dresses")} />
-                    <label for="scales"> Dresses</label>
-                  </div>
-                  <div style={{ margin: "10px" }}>
-                    <input type="checkbox" value="Jackets" onChange={handelFilter} checked={itemType.includes("Jackets")} />
-                    <label for="scales"> Jackets</label>
-                  </div>
-                  <div style={{ margin: "10px" }}>
-                    <input type="checkbox" value="Jeans" onChange={handelFilter} checked={itemType.includes("Jeans")} />
-                    <label for="scales"> Jeans</label>
-                  </div>
-                </div>
-              </AccordionPanel>
-            </>
-          )}
-        </AccordionItem>
         <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box as="span" flex="1" textAlign="left">
+                SORT BY
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+            >
+              <div
+                onChange={handelSort}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "start",
+                }}
+              >
+                <div>
+                  <input
+                    type="radio"
+                    name="sort_by"
+                    id=""
+                    value="asc"
+                    defaultChecked={order === "asc"}
+                  />
+                  <label >Ascending</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="sort_by"
+                    id=""
+                    value="desc"
+                    defaultChecked={order === "desc"}
+                  />
+                  <label >Decending</label>
+                </div>
+              </div>
+            </div>
+          </AccordionPanel>
+        </AccordionItem>
+        {/* <h2
+          style={{
+            alignContent: "flex-start",
+            display: "flex",
+            margin: "10px 15px",
+          }}
+        >
+          FILTER BY
+        </h2> */}
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box as="span" flex="1" textAlign="left">
+                PRICE
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+            >
+              <div style={{display:"flex",justifyContent:"space-between",gap:"20px",alignItems:"center",marginBottom:"15px"}}><h3><b>MinPrice: {price[0]}</b></h3>    <h3><b>MaxPrice : {price[1]}</b></h3></div>
+              <RangeSlider
+                defaultValue={[300, 1000]}
+                min={0}
+                max={3000}
+                step={30}
+                onChange={(val)=>setprice(val)}
+                // onChangeEnd={(val) => console.log(val)}
+              >
+                <RangeSliderTrack bg="blue.100">
+                  <RangeSliderFilledTrack bg="blue" />
+                </RangeSliderTrack>
+                <RangeSliderThumb bgColor="blue.500" boxSize={4} index={0} />
+                <RangeSliderThumb bgColor="blue.500" boxSize={4} index={1} />
+              </RangeSlider>
+            </div>
+          </AccordionPanel>
+        </AccordionItem>
+        {/* <AccordionItem>
           {({ isExpanded }) => (
             <>
               <h2>
@@ -182,6 +265,36 @@ console.log(searchParams.getAll("itemType") );
               </AccordionPanel>
             </>
           )}
+        </AccordionItem> */}
+        <AccordionItem>
+          
+              <h2>
+                <AccordionButton>
+                  <Box as="span" flex="1" textAlign="left" >
+                    FIT
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                    fontSize: "18px",
+                  }}
+                >
+                  <div style={{ margin: "10px" }}>
+                    <input type="checkbox" id="scales" name="price" />
+                    <label for="scales"> Classic</label>
+                  </div>
+                  <div style={{ margin: "10px" }}>
+                    <input type="checkbox" id="scales" name="price" />
+                    <label for="scales"> Regular</label>
+                  </div>
+                </div>
+              </AccordionPanel>
         </AccordionItem>
         <AccordionItem>
           {({ isExpanded }) => (
@@ -189,7 +302,7 @@ console.log(searchParams.getAll("itemType") );
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left" margin="10px 0px">
-                   Fit
+                    FABRIC
                   </Box>
                   {isExpanded ? (
                     <MinusIcon fontSize="12px" />
@@ -204,16 +317,16 @@ console.log(searchParams.getAll("itemType") );
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "start",
-                    fontSize:"18px"
+                    fontSize: "18px",
                   }}
                 >
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Blazers</label>
+                    <label for="scales"> Denim</label>
                   </div>
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Coats</label>
+                    <label for="scales"> Leather</label>
                   </div>
                 </div>
               </AccordionPanel>
@@ -226,7 +339,7 @@ console.log(searchParams.getAll("itemType") );
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left" margin="10px 0px">
-                   Fabric
+                    OCCASIONS
                   </Box>
                   {isExpanded ? (
                     <MinusIcon fontSize="12px" />
@@ -241,29 +354,29 @@ console.log(searchParams.getAll("itemType") );
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "start",
-                    fontSize:"18px"
+                    fontSize: "18px",
                   }}
                 >
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Blazers</label>
+                    <label for="scales"> Sports</label>
                   </div>
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Coats</label>
+                    <label for="scales"> Beach</label>
                   </div>
                 </div>
               </AccordionPanel>
             </>
           )}
         </AccordionItem>
-        <AccordionItem>
+        {/* <AccordionItem>
           {({ isExpanded }) => (
             <>
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left" margin="10px 0px">
-                   OCCASIONS
+                    PERCENT OFF
                   </Box>
                   {isExpanded ? (
                     <MinusIcon fontSize="12px" />
@@ -278,14 +391,14 @@ console.log(searchParams.getAll("itemType") );
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "start",
-                    fontSize:"18px"
+                    fontSize: "18px",
                   }}
                 >
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
                     <label for="scales"> Blazers</label>
                   </div>
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
                     <label for="scales"> Coats</label>
                   </div>
@@ -300,7 +413,7 @@ console.log(searchParams.getAll("itemType") );
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left" margin="10px 0px">
-                   PERCENT OFF
+                    SALES AND OFFER
                   </Box>
                   {isExpanded ? (
                     <MinusIcon fontSize="12px" />
@@ -315,14 +428,14 @@ console.log(searchParams.getAll("itemType") );
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "start",
-                    fontSize:"18px"
+                    fontSize: "18px",
                   }}
                 >
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
                     <label for="scales"> Blazers</label>
                   </div>
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
                     <label for="scales"> Coats</label>
                   </div>
@@ -337,7 +450,7 @@ console.log(searchParams.getAll("itemType") );
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left" margin="10px 0px">
-                   SALES AND OFFER
+                    FABRIC
                   </Box>
                   {isExpanded ? (
                     <MinusIcon fontSize="12px" />
@@ -352,14 +465,14 @@ console.log(searchParams.getAll("itemType") );
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "start",
-                    fontSize:"18px"
+                    fontSize: "18px",
                   }}
                 >
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
                     <label for="scales"> Blazers</label>
                   </div>
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
                     <label for="scales"> Coats</label>
                   </div>
@@ -374,7 +487,7 @@ console.log(searchParams.getAll("itemType") );
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left" margin="10px 0px">
-                   FABRIC
+                    COLOR
                   </Box>
                   {isExpanded ? (
                     <MinusIcon fontSize="12px" />
@@ -389,14 +502,14 @@ console.log(searchParams.getAll("itemType") );
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "start",
-                    fontSize:"18px"
+                    fontSize: "18px",
                   }}
                 >
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
                     <label for="scales"> Blazers</label>
                   </div>
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
                     <label for="scales"> Coats</label>
                   </div>
@@ -411,7 +524,7 @@ console.log(searchParams.getAll("itemType") );
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left" margin="10px 0px">
-                   COLOR
+                    DESIGNER
                   </Box>
                   {isExpanded ? (
                     <MinusIcon fontSize="12px" />
@@ -426,14 +539,14 @@ console.log(searchParams.getAll("itemType") );
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "start",
-                    fontSize:"18px"
+                    fontSize: "18px",
                   }}
                 >
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
                     <label for="scales"> Blazers</label>
                   </div>
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
                     <label for="scales"> Coats</label>
                   </div>
@@ -448,7 +561,7 @@ console.log(searchParams.getAll("itemType") );
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left" margin="10px 0px">
-                   DESIGNER
+                    PANT TYPE
                   </Box>
                   {isExpanded ? (
                     <MinusIcon fontSize="12px" />
@@ -463,14 +576,14 @@ console.log(searchParams.getAll("itemType") );
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "start",
-                    fontSize:"18px"
+                    fontSize: "18px",
                   }}
                 >
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
                     <label for="scales"> Blazers</label>
                   </div>
-                  <div style={{ margin: "10px"}}>
+                  <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
                     <label for="scales"> Coats</label>
                   </div>
@@ -478,44 +591,7 @@ console.log(searchParams.getAll("itemType") );
               </AccordionPanel>
             </>
           )}
-        </AccordionItem>
-        <AccordionItem>
-          {({ isExpanded }) => (
-            <>
-              <h2>
-                <AccordionButton>
-                  <Box as="span" flex="1" textAlign="left" margin="10px 0px">
-                   PANT TYPE
-                  </Box>
-                  {isExpanded ? (
-                    <MinusIcon fontSize="12px" />
-                  ) : (
-                    <AddIcon fontSize="12px" />
-                  )}
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "start",
-                    fontSize:"18px"
-                  }}
-                >
-                  <div style={{ margin: "10px"}}>
-                    <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Blazers</label>
-                  </div>
-                  <div style={{ margin: "10px"}}>
-                    <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Coats</label>
-                  </div>
-                </div>
-              </AccordionPanel>
-            </>
-          )}
-        </AccordionItem>
+        </AccordionItem> */}
       </Accordion>
     </div>
   );

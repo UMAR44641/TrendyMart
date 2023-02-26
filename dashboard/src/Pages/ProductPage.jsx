@@ -1,7 +1,7 @@
 import {Flex,IconButton,InputGroup,   Stack,Modal,ModalOverlay,ModalContent,ModalFooter,ModalHeader,Textarea,Box,FormLabel,Input,ModalCloseButton,ModalBody ,useDisclosure,Button, Container, Spacer,} from "@chakra-ui/react";
 import ProductCard from "../components/ProductCard";
 import {AddIcon,SearchIcon} from "@chakra-ui/icons"
-import { useRef } from "react";
+import { useRef ,useState,useEffect } from "react";
 
 
 export default function ProductsPage() {
@@ -10,19 +10,49 @@ export default function ProductsPage() {
   const handleButtonClick = () => {
     inputRef.current.click();
   };
+
+
+  const [search, setSearch] = useState("");
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [loading,setLoading] = useState(false)
+  const getData = async () => {
+    try {
+      setLoading(true)
+      let response = await fetch("https://amazon-t415.onrender.com/products");
+      response = await response.json();
+      setData(response);
+      setFilteredData(response);
+      setLoading(false)
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    let result = data.filter((item) => {
+      return item.desc.toLowerCase().match(search.toLowerCase());
+    });
+    setFilteredData(result);
+  }, [search]);
   
 
   return (
-    <>
-      <Flex gap="54">
-        <InputGroup >
+    <div>{loading ? <p style={{textAlign:"center",fontSize:"30px"}}>Loading...</p> : <div><Flex gap="54">
+        <InputGroup>
           <Input
             type="text"
             borderColor="skyBlue"
             placeholder="Search any product"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
         </InputGroup>
-        <Button  leftIcon={<AddIcon />} colorScheme="teal" onClick={onOpen}>
+        <Button leftIcon={<AddIcon />} colorScheme="teal" onClick={onOpen}>
           Create Product
         </Button>
       </Flex>
@@ -71,19 +101,9 @@ export default function ProductsPage() {
       </Modal>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr" }}>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-      </div>
-    </>
+        {filteredData.map((item) => (
+          <ProductCard item={item} />
+        ))}
+      </div></div>}</div>
   );
 }

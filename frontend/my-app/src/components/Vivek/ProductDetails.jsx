@@ -28,15 +28,47 @@ import "./details.css"
 import {MinusIcon,AddIcon} from "@chakra-ui/icons"
 import RecommendSlider from "./Slider";
 import RecentlySlider from "./RecentlySlider";
+import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 
 
 const ProductDetails = () => {
+  const {_id} = useParams()
+  
   const toast = useToast();
   const [active,setActive] = useState(null)
   const [activeColor, setActiveColor] = useState(null);
   const [disable,setDisable] = useState(false)
   const [text,setText] = useState("")
   const [colorText, setColorText] = useState("Red");
+  const [product,setProduct] = useState({})
+  console.log({_id})
+  const token = JSON.parse(localStorage.getItem("loginData"))
+  const { isAuth } = useSelector((store) => {
+    return store.auth;
+  });
+  const getProduct=async()=>{
+    let res = await fetch(
+      `https://courageous-tuxedo-dog.cyclic.app/products/${_id}`
+    );
+    res = await res.json()
+    setProduct(res)
+    let arr = JSON.parse(localStorage.getItem("recently")) || [];
+    if (!arr.some((item) => item._id === res._id)) {
+      arr.push(res);
+      if (arr.length > 10) {
+        arr.shift();
+      }
+      localStorage.setItem("recently", JSON.stringify(arr));
+    }
+  }
+  useEffect(()=>{
+    getProduct()
+  },[_id])
+  const {url,title,desc,price,category,cutprice,id} = product
+  
+  console.log([product])
   function handleButtonClick(button,buttonText){
     setActive(button)
     setDisable(true)
@@ -46,38 +78,75 @@ const ProductDetails = () => {
     setColorText(color);
     setActiveColor(button);
   }
+  const addProduct=async()=>{
+        let payload ={
+          url:url,
+          title:title,
+          desc:desc,
+          category:category,
+          price:price,
+          cutprice:cutprice,
+          _id:_id
+        }
+        console.log(typeof id)
+      
+         fetch(
+            "https://courageous-tuxedo-dog.cyclic.app/cart/upload",
+            {
+            
+              method: "POST",
+              body: JSON.stringify(payload),
+              headers: {
+                "Content-type": "application/json",
+                Authorization: token.token,
+              },
+            }
+          ).then((res)=>{
+            return res.json()
+          }).then((res)=>{
+            console.log(res)
+          }).catch((err)=>{
+            console.log(err)
+          });
+  
+     
+  }
+  const handleBag=()=>{
+    onOpen()
+    addProduct()
+  }
   
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const btnRef = React.useRef();
     const [data,setData] = useState([])
     const getData=async()=>{
-    let res = await fetch("https://amazon-t415.onrender.com/products?category=mens");
+    let res = await fetch(
+      `https://courageous-tuxedo-dog.cyclic.app/products?category=${category}`
+    );
     res = await res.json()
+    // console.log(res)
     setData(res)
     }
     useEffect(()=>{
            getData()
-    },[])
+    },[category])
   return (
     <div>
       <div className="container">
         <div className="imageBox">
-          <img
-            src="https://images.bloomingdalesassets.com/is/image/BLM/products/4/optimized/12683554_fpx.tif?op_sharpen=1&wid=700&fit=fit,1&$filtersm$&fmt=webp"
-            alt=""
-          />
+          <img style={{ margin: "auto", height: "70%" }} src={url} alt="" />
         </div>
         <div className="detail">
           <div style={{ textAlign: "left" }}>
-            <h1 style={{ fontWeight: "bold" }}>Peter Millar</h1>
-            <p>Crest Solid Regular Fit Quarter Zip Sweater</p>
+            <h1 style={{ fontWeight: "bold" }}>{title}</h1>
+            <p>{desc}</p>
           </div>
           <div
             style={{ display: "flex", alignItems: "center", marginTop: "45px" }}
           >
             <h1 style={{ marginRight: "5px" }}>INR</h1>
-            <p style={{ marginRight: "10px" }}>15826.00</p>
+            <p style={{ marginRight: "10px" }}>{price}</p>
             <p style={{ borderBottom: "1px solid" }}>Details</p>
           </div>
           <div
@@ -284,15 +353,15 @@ const ProductDetails = () => {
             ref={btnRef}
             type="button"
             isDisabled={!disable}
-            onClick={onOpen}
+            onClick={handleBag}
             rounded={"none"}
             w={"full"}
             mt={6}
             mb={10}
             size={"lg"}
             py={"2"}
-            bg={useColorModeValue("gray.900", "gray.50")}
-            color={useColorModeValue("white", "gray.900")}
+            bg={"gray.900"}
+            color={"white"}
             textTransform={"uppercase"}
             _hover={{
               transform: "translateY(2px)",
@@ -418,23 +487,26 @@ const ProductDetails = () => {
           </Center>
           <Grid mt={5} templateColumns="repeat(1, 1fr)" gap={10}>
             {data.slice(16, 21).map((item) => (
-              <GridItem key={item.id}>
-                <Center>
-                  <Image height="200px" src={item.url} />
-                </Center>
-                <Center color="black" fontSize="ms">
-                  {item.title}
-                </Center>
-                <Center mt={1} fontSize="ms">
-                  INR {item.price}
-                </Center>
-              </GridItem>
+              <Link to={`/products/${item._id}`} key={item.id}>
+                <GridItem>
+                  <Center>
+                    <Image height="200px" src={item.url} />
+                  </Center>
+                  <Center color="black" fontSize="ms">
+                    {item.title}
+                  </Center>
+                  <Center mt={1} fontSize="ms">
+                    INR {item.price}
+                  </Center>
+                </GridItem>
+              </Link>
             ))}
           </Grid>
         </div>
       </div>
       <hr className="hr" />
-      <RecommendSlider />
+
+      <RecentlySlider category={category} />
       <hr className="hr" />
       <Accordion
         allowMultiple
@@ -484,7 +556,7 @@ const ProductDetails = () => {
         </AccordionItem>
       </Accordion>
       <hr className="hr" />
-      <RecentlySlider />
+      <RecommendSlider category={category} />
       <hr className="hr" />
       <Drawer
         isOpen={isOpen}
@@ -500,15 +572,12 @@ const ProductDetails = () => {
 
           <DrawerBody>
             <Center>
-              <Image
-                src="https://images.bloomingdalesassets.com/is/image/BLM/products/8/optimized/11929298_fpx.tif?op_sharpen=1&wid=100&fit=fit,1&$filterlrg$"
-                style={{ margin: "auto" }}
-              />
+              <Image src={url} style={{ margin: "auto" }} />
             </Center>
             <Center mt={5}>1 item added:</Center>
             <Center mt={1}>
-              <p style={{ color: "black", fontWeight: "bold" }}>Total</p>: INR
-              11,533.00
+              <p style={{ color: "black", fontWeight: "bold" }}>Total</p>: INR{" "}
+              {price}
             </Center>
             <Button
               ref={btnRef}
