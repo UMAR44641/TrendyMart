@@ -4,7 +4,7 @@ import Carousel from '../../components/fahad_components/Carousel';
 import Carousel2 from '../../components/fahad_components/Carousel2';
 import Carousel3 from '../../components/fahad_components/Carousel3';
 import {Flex,Box,Heading,Image,Text} from "@chakra-ui/react";
-import Footer from '../../components/fahad_components/Footer';
+
 
 const Home = () => {
   return (
@@ -27,7 +27,7 @@ const Home = () => {
       <Image src="https://images.bloomingdalesassets.com/is/image/BcomMedia/media/0215_D_05_MULTI_Essentials.jpg?scl=1&fmt=webp&wid=1440" />
      </Box>
      <Carousel3/>
-     <Footer/>
+    
     </div>
   )
 }
