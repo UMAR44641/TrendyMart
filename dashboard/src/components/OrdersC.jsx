@@ -4,8 +4,10 @@ import { Button, Input, InputGroup } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component"
 import axios from "axios"
+import {useToast} from "@chakra-ui/react"
 
 export default function OrdersC() {
+  const toast = useToast()
     const [search,setSearch] = useState("")
      const [data, setData] = useState([]);
      const [filteredData,setFilteredData] = useState([])
@@ -41,7 +43,17 @@ export default function OrdersC() {
            `https://courageous-tuxedo-dog.cyclic.app/orders/delete/${id}`,
            { headers: headers }
          );
-         console.log(response);
+         if (response.data.message == "The order has been deleted successfully"){
+           toast({
+             title: "Order deleted.",
+             description: "Order has been deleted.",
+             status: "success",
+             duration: 3000,
+             isClosable: true,
+             position: "top",
+           });
+         }
+           console.log(response);
          getData()
        } catch (err) {
          console.log(err);
