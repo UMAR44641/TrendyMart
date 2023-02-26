@@ -1,45 +1,74 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styles from "./Cartcard.module.css";
-export const Cartcard = () => {
-  const [quantity, setq] = useState(1);
-  const handleChange = (e) => {
-    setq(e.target.value);
+export const Cartcard = ({ ...props }) => {
+  const { url, title, desc, price, quantity, category, _id } = props;
+  const { token } = JSON.parse(localStorage.getItem("loginData")) || null;
+  const Increaseq = async (_id) => {
+    axios
+      .patch(
+        `https://courageous-tuxedo-dog.cyclic.app/cart/increasequantity/${_id}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      )
+      .then((res) => console.log(res.data));
   };
-  const data = {
-    id: 1,
-    img: "http://slimages.macys.com/is/image/BLM/products/3/optimized/12615933_fpx.tif?bgc=255,255,255&wid=200&qlt=50&layer=comp&op_sharpen=0&resMode=bicub&op_usm=0.7,1.0,0.5,0&fmt=jpeg",
-    title: "Title1",
-    price: "123",
-    des: "sdffsdfsf sdfsf sdf fsdfs fsd sfd sdfsd fsdfdfs",
-    color: "black",
-    size: "6",
+
+  const Decq = async (_id) => {
+    axios
+      .patch(
+        `https://courageous-tuxedo-dog.cyclic.app/cart/decreasequantity/${_id}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      )
+      .then((res) => console.log(res.data));
   };
+  const DeleteData = async (_id) => {
+    axios
+      .delete(`https://courageous-tuxedo-dog.cyclic.app/cart/delete/${_id}`, {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then((res) => console.log(res.data));
+  };
+
+  useEffect(() => {
+    console.log(token);
+    console.log(_id);
+  }, []);
   return (
     <div>
       <div className={styles.b1}>
         <div className={styles.b2}>
           <div className={styles.b21}>
             <div className={styles.b211}>
-              <img src={data.img} alt="product photo" className={styles.img1} />
+              <img src={url} alt="product photo" className={styles.img1} />
             </div>
           </div>
           <div className={styles.b22}>
             <div className={styles.b221}>
               <div className={styles.b2211}>
-                <h3>{data.title}</h3>
-                <p>{data.des}</p>
+                <h3>{title}</h3>
+                <p>{desc}</p>
               </div>
               <div className={styles.b2212}>
-                <p>WEB ID : {data.id}</p>
+                <p>WEB ID : {Math.ceil(Math.random() * 100) + 1}</p>
               </div>
               <div className={styles.b2212}>
-                <p>Size : {data.size}</p>
+                <p>Category: {category}</p>
               </div>
-              <div className={styles.b2212}>Color : {data.color}</div>
+              {/*  <div className={styles.b2212}>Color : {color}</div> */}
             </div>
             <div className={styles.b222}>
               <div className={styles.b2221}>
-                <p>INR {data.price}</p>
+                <p>INR {price}</p>
               </div>
               <div className={styles.b2222}>
                 <div className={styles.b22221}>
@@ -47,21 +76,61 @@ export const Cartcard = () => {
                     {/* <div>
                       <h3>Qty:</h3>
                     </div> */}
-                    <div className={styles.select1}>
-                      <label>Qty:</label>
-                      <select value={quantity} onChange={handleChange}>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                      </select>
+                    <div
+                      className={styles.select1}
+                      style={{
+                        display: "flex",
+                        width: "100px",
+                        textAlign: "center",
+                      }}
+                    >
+                      <h3 style={{ paddingRight: "5px" }}>Qty:</h3>
+                      <div
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        {" "}
+                        <button
+                          disabled={quantity == 1}
+                          onClick={() => Decq(_id)}
+                          style={{
+                            width: "30%",
+                            // border: "1px solid",
+                            borderRadius: "3px",
+                            background: "lightgrey",
+                            color: "black",
+                          }}
+                        >
+                          -
+                        </button>
+                        <h3
+                          style={{
+                            width: "30%",
+                          }}
+                        >
+                          {quantity}
+                        </h3>
+                        <button
+                          onClick={() => Increaseq(_id)}
+                          style={{
+                            width: "30%",
+                            // border: "1px solid",
+                            borderRadius: "3px",
+                            background: "lightgrey",
+                            color: "black",
+                          }}
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className={styles.b22222}>
-                  <h3>INR {eval(data.price * quantity)}</h3>
+                  <h3>INR {eval(price * quantity)}</h3>
                 </div>
               </div>
             </div>
@@ -87,6 +156,7 @@ export const Cartcard = () => {
                     margin: "20px 0 0 0",
                     borderBottom: "1px solid black",
                   }}
+                  onClick={() => DeleteData(_id)}
                 >
                   Remove
                 </button>

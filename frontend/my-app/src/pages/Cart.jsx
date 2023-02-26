@@ -1,7 +1,27 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Cartcard } from "../components/ranbir/Cartcard";
 import styles from "./cart.module.css";
 export const Cart = () => {
+  const [data, setData] = useState([]);
+  const t = JSON.parse(localStorage.getItem("loginData")) || null;
+  const getData = async () => {
+    axios
+      .get("https://courageous-tuxedo-dog.cyclic.app/cart", {
+        headers: {
+          authorization: t.token,
+        },
+      })
+      .then((res) => setData(res.data));
+  };
+  useEffect(() => {
+    // console.log(token);
+
+    getData();
+    // setTimeout(() => {
+    //   console.log(data);
+    // }, 5000);
+  }, []);
   return (
     <div>
       <div className={styles.cont1}>
@@ -49,11 +69,10 @@ export const Cart = () => {
       </div>
       <div className={styles.cart}>
         <div className={styles.cart1}>
-          <Cartcard />
-          <Cartcard />
-          <Cartcard />
-          <Cartcard />
-          <Cartcard />
+          {/* data */}
+          {data.map((el) => (
+            <Cartcard key={el._id} {...el} />
+          ))}
         </div>
         <div className={styles.cart2}>
           <div className={styles.c1}>
