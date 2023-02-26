@@ -1,10 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Cartcard } from "../components/ranbir/Cartcard";
 import styles from "./cart.module.css";
+
 export const Cart = () => {
   const [data, setData] = useState([]);
-
+const loginData=JSON.parse(localStorage.getItem("loginData"));
+const user_id=loginData?loginData.id:"";
   console.log(data)
   const t = JSON.parse(localStorage.getItem("loginData")) || null;
 
@@ -48,15 +51,22 @@ export const Cart = () => {
       }
     }).catch((err)=>{
       console.log(err.message)
-    })
+    });
+
+    axios.post(`https://courageous-tuxedo-dog.cyclic.app/orders/upload/${user_id}`).then((res)=>{
+      console.log(res.data)
+    }).catch((err)=>{
+      console.log(err.message)
+    });
+
    
   }
 
 
 
 
-  useEffect(() => {
-    // console.log(token);
+  
+  
 
   const Increaseq = async (_id) => {
     fetch(
@@ -247,7 +257,7 @@ export const Cart = () => {
           </div>
           <div className={styles.c12}>
             <div>
-              <a href="#">Continue Shopping</a>
+              <Link to="/">Continue Shopping</Link>
             </div>
             <div>
               <a href="#">Shipping to the United States?</a>

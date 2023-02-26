@@ -26,6 +26,7 @@ const MensShorts = () => {
   const [placement, setPlacement] = useState("left");
   // const order = searchParams.getAll("order")[0];
 
+
   const getData = (params={minprice:700,maxprice:2000}) => {
     axios
       .get("https://courageous-tuxedo-dog.cyclic.app/products", params)
@@ -41,7 +42,8 @@ useEffect(()=>{
       maxprice:700,
     }
   }
-  getData(paramobj)
+  getData(paramobj);
+
 },[])
   useEffect(() => {
     const price1 = +searchParams.getAll("maxprice")[0]||"";

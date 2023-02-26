@@ -183,12 +183,12 @@ const Navbar = () => {
           justifyContent="flex-start"
           alignItems="center"
         >
-          <Heading
+          <Link to="/" ><Heading
             size={{ md: "lg", sm: "md", base: "sm" }}
             fontFamily="Brush Script MT, Brush Script Std, cursive;"
           >
             TrendyMart
-          </Heading>
+          </Heading></Link>
         </Box>
         <Box
           flex="1"
@@ -219,6 +219,8 @@ const Navbar = () => {
                 backgroundColor: "white",
                 padding: "20px",
                 top: "95px",
+                overflow:"scroll",
+                height:"350px"
                 // width:"20%"
               }}
             >
@@ -228,16 +230,17 @@ const Navbar = () => {
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      padding: "20px 0px",
+                      padding: "20px 10px",
                       alignItems: "center",
                       borderBottom: "2px solid gray",
                       gap: "50px",
-                      backgroundColor: "white",
-                      width:"280px"
+
+                      width:"280px",
+                      
                     }}
                     id="searchDiv"
                   >
-                    <img width="40px"  src={product.url} alt="" />
+                    <img width="40px"   src={product.url} alt="" />
                     {/* <p style={{display:"flex",textAlign:"start",alignItems:"start"}}>{product.title.substring(0,20)}</p> */}
                     <div
                       style={{
@@ -247,7 +250,7 @@ const Navbar = () => {
                         width:"70%"
                       }}
                     >
-                      <p>{product.title.substring(0, 12)}...</p>
+                      <p>{product.title}</p>
                     </div>
                   </div>
                   {/* <hr style={{margin:"10px 0px"}}/> */}
@@ -334,7 +337,7 @@ const Navbar = () => {
           alignItems="center"
           justifyContent={{ lg: "center", base: "flex-end" }}
         >
-          <FaShoppingCart cursor="pointer" fontSize="22px" />
+          <Link to="/cart" ><FaShoppingCart cursor="pointer" fontSize="22px" /></Link>
         </Box>
       </Flex>
 
@@ -346,10 +349,11 @@ const Navbar = () => {
         >
           {data.map((ele) => {
             return (
-              <Box
+             <Link to="/products" > <Box
                 onMouseEnter={() => {
-                  document.querySelector(".dropdown-content").style.display =
+                    document.querySelector(".dropdown-content").style.display =
                     "flex";
+               
                 }}
                 cursor="pointer"
                 pb="7px"
@@ -361,6 +365,7 @@ const Navbar = () => {
               >
                 <Text fontWeight={600}>{ele}</Text>
               </Box>
+              </Link>
             );
           })}
         </Flex>

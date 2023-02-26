@@ -579,7 +579,7 @@ const ProductDetails = () => {
               <p style={{ color: "black", fontWeight: "bold" }}>Total</p>: INR{" "}
               {price}
             </Center>
-            <Button
+            <Link to="/cart" ><Button
               ref={btnRef}
               onClick={onOpen}
               rounded={"none"}
@@ -597,7 +597,7 @@ const ProductDetails = () => {
               }}
             >
               VIEW BAG & CHECKOUT
-            </Button>
+            </Button></Link>
             <Divider />
             <Center>RECOMMENDED FOR YOU</Center>
             <Grid mt={5} templateColumns="repeat(2, 1fr)" gap={10}>
