@@ -71,7 +71,7 @@ export const SideBar = () => {
     <div
       style={{ fontWeight: "revert-layer", width: "100%" }}
     >
-      <Accordion defaultIndex={[0,1]} allowMultiple>
+      <Accordion defaultIndex={[0,1,2]} allowMultiple>
         <AccordionItem>
           <h2>
             <AccordionButton>

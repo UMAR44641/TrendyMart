@@ -24,7 +24,7 @@ const MensShorts = () => {
   const [data, setdata] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("left");
-  const order = searchParams.getAll("order")[0];
+  // const order = searchParams.getAll("order")[0];
 
   const getData = (params) => {
     axios
