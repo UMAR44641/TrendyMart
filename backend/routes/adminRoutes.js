@@ -3,6 +3,7 @@ const {Adminmodel}=require("../model/Adminmodel")
 const adminRouter=express.Router();
 const jwt=require("jsonwebtoken");
 const bcrypt=require("bcryptjs");
+const { adminauthenticate } = require("../middlewares/adminauthentication");
 require("dotenv").config();
 adminRouter.post("/register",async(req,res)=>{
     const {name,password,age,email,gender,city,mobile,secretkey}=req.body;
@@ -50,6 +51,16 @@ adminRouter.post("/login",async(req,res)=>{
         }
     }catch(err){     
        res.send({"message":err})
+    }
+})
+
+adminRouter.get("/",adminauthenticate,async(req,res)=>{
+    try{
+        const admins=await Adminmodel.find();
+        res.send(admins)
+    }
+    catch(err){
+        res.send({"message":err})
     }
 })
 

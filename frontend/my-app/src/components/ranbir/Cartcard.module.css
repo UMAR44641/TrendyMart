@@ -80,6 +80,7 @@
   display: flex;
   /* border: 2px solid firebrick; */
   width: 60%;
+  align-content: space-between;
   justify-content: center;
 }
 .b3 {
@@ -104,10 +105,21 @@
 @media all and (min-width: 250px) and (max-width: 500px) {
   .b222 {
     display: flex;
+    justify-content: space-between;
+    align-content: space-between;
     flex-direction: column;
   }
   .b22221 {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-content: space-between;
+    padding: 10px;
+    margin: 5px;
+  }
+  .select1 {
+    display: "flex";
+    width: "100px";
+    text-align: "center";
   }
 }

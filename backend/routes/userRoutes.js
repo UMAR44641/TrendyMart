@@ -3,6 +3,7 @@ const {Usermodel}=require("../model/Usermodel")
 const userRouter=express.Router();
 const jwt=require("jsonwebtoken");
 const bcrypt=require("bcryptjs");
+const { adminauthenticate } = require("../middlewares/adminauthentication");
 require("dotenv").config();
 userRouter.post("/register",async(req,res)=>{
     const {name,password,age,email,gender,city,mobile}=req.body;
@@ -46,6 +47,17 @@ userRouter.post("/login",async(req,res)=>{
         }
     }catch(err){     
        res.send({"message":err})
+    }
+})
+
+
+userRouter.get("/",adminauthenticate,async(req,res)=>{
+    try{
+        const users=await Usermodel.find();
+        res.send(users)
+    }
+    catch(err){
+        res.send({"message":err})
     }
 })
 

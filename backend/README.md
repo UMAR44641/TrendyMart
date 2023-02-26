@@ -35,7 +35,20 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
      4.res = {"message":"wrong password"}----->[correct email & wrong password]
      5.res = {"message":"Incorrect email"}----->[correct password & wrong email]
 
-(iii) /admins/register <-----> {method===>POST} <----->  (for registering new admin) 
+
+(iii)  /users <-----> {method===>GET} <----->(to get all the users)
+
+
+   ===request headers===
+    <-->req.headers.authorization=token<-->[admin authorization]
+
+
+   ==responses==
+     1.res = [{},{},---]     <---->[array containg objects]
+     2.res = {"message":error}----->[if any error happens]
+
+
+(iv) /admins/register <-----> {method===>POST} <----->  (for registering new admin) 
    ==request body==
    {
     email:String,
@@ -52,7 +65,7 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
      2.res = {"message":error}----->[if any error happens]
      3.res = {"message":"You already have an account, please login"}----->if user already exists
 
-(iv)  /admins/login <-----> {method===>POST} <----->(for logging into the admin account)
+(v)  /admins/login <-----> {method===>POST} <----->(for logging into the admin account)
    ==request body==
    {
     email:String,
@@ -64,7 +77,18 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
      4.res = {"message":"wrong password"}----->[correct email & wrong password]
      5.res = {"message":"Incorrect email"}----->[correct password & wrong email]
 
-(v)  /products/ <-----> {method===>GET} <----->(getting all the products)
+(vi)  /admins <-----> {method===>GET} <----->(to get all the admins)
+
+
+   ===request headers===
+    <-->req.headers.authorization=token<-->[admin authorization]
+
+
+   ==responses==
+     1.res = [{},{},---]     <---->[array containg objects]
+     2.res = {"message":error}----->[if any error happens]
+
+(vii)  /products/ <-----> {method===>GET} <----->(getting all the products)
     
     ===queries===
      search=String  [it will get the items which include the string passed in search query]
@@ -79,14 +103,14 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
      2.res = {"message":error}      <----->[if any error happens]
 
 
-(vi) /products/:id    <-----> {method===>GET} <----->(getting a single product)
+(viii) /products/:id    <-----> {method===>GET} <----->(getting a single product)
 
     ===responses===
      1.res = {}     <---->[object containing tht product]
      2.res = {"message":error}      <----->[if any error happens]
 
 
-(vii) /products/upload <------> {method===>POST}  <----> (for posting a product)
+(ix) /products/upload <------> {method===>POST}  <----> (for posting a product)
     
     ==request body==
    {
@@ -107,7 +131,7 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
     2.res = {"message":error}
 
 
-(viii) /products/:id <------> {method===>PATCH}  <----> (for updating details of a product)
+(x) /products/:id <------> {method===>PATCH}  <----> (for updating details of a product)
     
     ===request===
     <-->req.headers.authorization=token<-->
@@ -118,7 +142,7 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
     2.res = {"message":error}
 
 
-(ix) /products/:id <------> {method===>DELETE}  <----> (for deleting a particular product)
+(xi) /products/:id <------> {method===>DELETE}  <----> (for deleting a particular product)
     
     ===request===
     <-->req.headers.authorization=token<-->
@@ -128,7 +152,7 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
     2.res = {"message":error}
 
 
-(x) /cart   <------>  {method====>GET}   <----> (for getting all the products in the cart of the user who is logged in)
+(xii) /cart   <------>  {method====>GET}   <----> (for getting all the products in the cart of the user who is logged in)
 
      ===request===
     <-->req.headers.authorization=token<-->
@@ -139,7 +163,7 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
 
 
 
-(xi) /cart/upload   <------>  {method====>POST}   <----> (to add product to the cart)
+(xiii) /cart/upload   <------>  {method====>POST}   <----> (to add product to the cart)
 
      ===request===
     <-->req.headers.authorization=token<-->
@@ -152,7 +176,7 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
     4.res = {"message":error}     <----->[if any error happens]
 
 
-(xii) /cart/delete/:id   <------>  {method====>DELETE}   <----> (to remove product from the cart)
+(ix) /cart/delete/:id   <------>  {method====>DELETE}   <----> (to remove product from the cart)
 
      ===request===
     <-->req.headers.authorization=token<-->
@@ -165,7 +189,7 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
 
 
 
-(xiii) /cart/increasequantity/:id   <------>  {method====>PATCH}   <----> (to increase quantity of the product)
+(x) /cart/increasequantity/:id   <------>  {method====>PATCH}   <----> (to increase quantity of the product)
 
      ===request===
     <-->req.headers.authorization=token<-->
@@ -177,7 +201,7 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
 
 
 
-(xiv) /cart/decreasequantity/:id   <------>  {method====>PATCH}   <----> (to decrease quantity of the product)
+(xi) /cart/decreasequantity/:id   <------>  {method====>PATCH}   <----> (to decrease quantity of the product)
 
      ===request===
     <-->req.headers.authorization=token<-->
@@ -188,7 +212,7 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
     4.res = {"message":error}     <----->[if any error happens]
 
 
-(xv) /orders/    <------>  {method====>GET}   <----> (to get all the orders)
+(xii) /orders/    <------>  {method====>GET}   <----> (to get all the orders)
 
 
    ===request===
@@ -201,7 +225,7 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
 
 
 
-(xvi) /orders/delete/:id   <------>  {method====>DELETE}   <----> (to delete an order)
+(xiii) /orders/delete/:id   <------>  {method====>DELETE}   <----> (to delete an order)
 
      ===request===
     <-->req.headers.authorization=token<-->
@@ -212,7 +236,7 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
     4.res = {"message":error}     <----->[if any error happens]
 
 
-(xvii) /orders/upload/:userID  <------>  {method====>POST}   <----> (to checkout from cart and place order. everything in cart is deleted)
+(xiv) /orders/upload/:userID  <------>  {method====>POST}   <----> (to checkout from cart and place order. everything in cart is deleted)
 
      ===request===
 

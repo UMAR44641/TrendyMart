@@ -1,48 +1,21 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styles from "./Cartcard.module.css";
-export const Cartcard = ({ ...props }) => {
-  const { url, title, desc, price, quantity, category, _id } = props;
-  const { token } = JSON.parse(localStorage.getItem("loginData")) || null;
-  const Increaseq = async (_id) => {
-    axios
-      .patch(
-        `https://courageous-tuxedo-dog.cyclic.app/cart/increasequantity/${_id}`,
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      )
-      .then((res) => console.log(res.data));
-  };
+export const Cartcard = (props) => {
+  const {
+    url,
+    title,
+    desc,
+    price,
+    quantity,
+    category,
+    _id,
 
-  const Decq = async (_id) => {
-    axios
-      .patch(
-        `https://courageous-tuxedo-dog.cyclic.app/cart/decreasequantity/${_id}`,
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      )
-      .then((res) => console.log(res.data));
-  };
-  const DeleteData = async (_id) => {
-    axios
-      .delete(`https://courageous-tuxedo-dog.cyclic.app/cart/delete/${_id}`, {
-        headers: {
-          authorization: token,
-        },
-      })
-      .then((res) => console.log(res.data));
-  };
+    Increaseq,
+    Decq,
+    DeleteData,
+  } = props;
 
-  useEffect(() => {
-    console.log(token);
-    console.log(_id);
-  }, []);
   return (
     <div>
       <div className={styles.b1}>
@@ -59,7 +32,7 @@ export const Cartcard = ({ ...props }) => {
                 <p>{desc}</p>
               </div>
               <div className={styles.b2212}>
-                <p>WEB ID : {Math.ceil(Math.random() * 100) + 1}</p>
+                <p>WEB ID : {_id}</p>
               </div>
               <div className={styles.b2212}>
                 <p>Category: {category}</p>
@@ -68,7 +41,7 @@ export const Cartcard = ({ ...props }) => {
             </div>
             <div className={styles.b222}>
               <div className={styles.b2221}>
-                <p>INR {price}</p>
+                <p>INR {Math.ceil(price)}</p>
               </div>
               <div className={styles.b2222}>
                 <div className={styles.b22221}>
@@ -129,7 +102,7 @@ export const Cartcard = ({ ...props }) => {
                     </div>
                   </div>
                 </div>
-                <div className={styles.b22222}>
+                <div className={styles.b22222} style={{ marginLeft: "2px" }}>
                   <h3>INR {eval(price * quantity)}</h3>
                 </div>
               </div>

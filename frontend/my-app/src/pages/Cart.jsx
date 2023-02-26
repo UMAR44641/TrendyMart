@@ -4,17 +4,36 @@ import { Cartcard } from "../components/ranbir/Cartcard";
 import styles from "./cart.module.css";
 export const Cart = () => {
   const [data, setData] = useState([]);
+
   console.log(data)
   const t = JSON.parse(localStorage.getItem("loginData")) || null;
+
+  const [total, setTotal] = useState(0);
+  // const [count, setCount] = useState(data);
+  const { token } = JSON.parse(localStorage.getItem("loginData")) || null;
+  const getTotal = () => {
+    let t = 0;
+    const totalPrice = data.reduce(
+      (acc, obj) => acc + obj.quantity * obj.price,
+      0
+    );
+    setTotal(totalPrice);
+  };
+
   const getData = async () => {
     axios
       .get("https://courageous-tuxedo-dog.cyclic.app/cart", {
         headers: {
-          authorization: t.token,
+          authorization: token,
         },
       })
-      .then((res) => setData(res.data));
+      .then((res) => {
+        setData(res.data);
+        console.log(res.data);
+      });
+    getTotal();
   };
+
 
 
 
@@ -39,10 +58,54 @@ export const Cart = () => {
   useEffect(() => {
     // console.log(token);
 
+  const Increaseq = async (_id) => {
+    fetch(
+      `https://courageous-tuxedo-dog.cyclic.app/cart/increasequantity/${_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => getData());
+  };
+  const Decq = async (_id) => {
+    fetch(
+      `https://courageous-tuxedo-dog.cyclic.app/cart/decreasequantity/${_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => getData());
+
+
+    // getData();
+  };
+  const DeleteData = async (_id) => {
+    let res = await axios
+      .delete(`https://courageous-tuxedo-dog.cyclic.app/cart/delete/${_id}`, {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then((res) => getData());
+  };
+
+  useEffect(() => {
     getData();
-    // setTimeout(() => {
-    //   console.log(data);
-    // }, 5000);
+    // getTotal();
   }, []);
   return (
     <div>
@@ -65,7 +128,7 @@ export const Cart = () => {
               fontSize: "12px",
             }}
           >
-            BAG ID: {Math.ceil(Math.random() * 100) + 1}
+            BAG ID: {"121213"}
           </p>
         </div>
         <div className={styles.but1}>
@@ -93,7 +156,13 @@ export const Cart = () => {
         <div className={styles.cart1}>
           {/* data */}
           {data.map((el) => (
-            <Cartcard key={el._id} {...el} />
+            <Cartcard
+              key={el._id}
+              {...el}
+              Increaseq={Increaseq}
+              Decq={Decq}
+              DeleteData={DeleteData}
+            />
           ))}
         </div>
         <div className={styles.cart2}>
@@ -153,7 +222,7 @@ export const Cart = () => {
                 <h1>Subtotal</h1>
               </div>
               <div>
-                <h1>INR {"12345"}</h1>
+                <h1>INR {total}</h1>
               </div>
             </div>
           </div>
