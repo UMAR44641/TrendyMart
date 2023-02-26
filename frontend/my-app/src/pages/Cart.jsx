@@ -4,15 +4,28 @@ import { Cartcard } from "../components/ranbir/Cartcard";
 import styles from "./cart.module.css";
 export const Cart = () => {
   const [data, setData] = useState([]);
+  const [total, setTotal] = useState(0);
+  // const [count, setCount] = useState(data);
   const { token } = JSON.parse(localStorage.getItem("loginData")) || null;
-  const getData = async () => {
+  const getTotal = () => {
+    let t = 0;
+    const totalPrice = data.reduce(
+      (acc, obj) => acc + obj.quantity * obj.price,
+      0
+    );
+    setTotal(totalPrice);
+  };
+  const getData = () => {
     axios
       .get("https://courageous-tuxedo-dog.cyclic.app/cart", {
         headers: {
           authorization: token,
         },
       })
-      .then((res) => setData(res.data));
+      .then((res) => {
+        setData(res.data);
+      })
+      .then((res) => getTotal());
   };
   const Increaseq = async (_id) => {
     fetch(
@@ -28,39 +41,39 @@ export const Cart = () => {
       .then((res) => {
         return res.json();
       })
-      .then((res) => {
-        console.log(res);
-      });
+      .then((res) => getData());
   };
   const Decq = async (_id) => {
-    let res = await axios.patch(
+    fetch(
       `https://courageous-tuxedo-dog.cyclic.app/cart/decreasequantity/${_id}`,
       {
+        method: "PATCH",
         headers: {
+          "Content-Type": "application/json",
           authorization: token,
         },
       }
-    );
-    console.log(res.data);
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => getData());
+
+    // getData();
   };
   const DeleteData = async (_id) => {
-    let res = await axios.delete(
-      `https://courageous-tuxedo-dog.cyclic.app/cart/delete/${_id}`,
-      {
+    let res = await axios
+      .delete(`https://courageous-tuxedo-dog.cyclic.app/cart/delete/${_id}`, {
         headers: {
           authorization: token,
         },
-      }
-    );
-    console.log(res.data);
-    getData();
+      })
+      .then((res) => getData());
   };
+
   useEffect(() => {
-    console.log("cart");
     getData();
-    setTimeout(() => {
-      console.log(data);
-    }, 5000);
+    // getTotal();
   }, []);
   return (
     <div>
@@ -177,7 +190,7 @@ export const Cart = () => {
                 <h1>Subtotal</h1>
               </div>
               <div>
-                <h1>INR {"12345"}</h1>
+                <h1>INR {total}</h1>
               </div>
             </div>
           </div>
