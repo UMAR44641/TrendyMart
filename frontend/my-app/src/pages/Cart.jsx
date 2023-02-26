@@ -1,14 +1,87 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Cartcard } from "../components/ranbir/Cartcard";
 import styles from "./cart.module.css";
 export const Cart = () => {
+  const [data, setData] = useState([]);
+  const [total, setTotal] = useState(0);
+  // const [count, setCount] = useState(data);
+  const { token } = JSON.parse(localStorage.getItem("loginData")) || null;
+  const getTotal = () => {
+    let t = 0;
+    const totalPrice = data.reduce(
+      (acc, obj) => acc + obj.quantity * obj.price,
+      0
+    );
+    setTotal(totalPrice);
+  };
+  const getData = () => {
+    axios
+      .get("https://courageous-tuxedo-dog.cyclic.app/cart", {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then((res) => {
+        setData(res.data);
+      })
+      .then((res) => getTotal());
+  };
+  const Increaseq = async (_id) => {
+    fetch(
+      `https://courageous-tuxedo-dog.cyclic.app/cart/increasequantity/${_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => getData());
+  };
+  const Decq = async (_id) => {
+    fetch(
+      `https://courageous-tuxedo-dog.cyclic.app/cart/decreasequantity/${_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => getData());
+
+    // getData();
+  };
+  const DeleteData = async (_id) => {
+    let res = await axios
+      .delete(`https://courageous-tuxedo-dog.cyclic.app/cart/delete/${_id}`, {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then((res) => getData());
+  };
+
+  useEffect(() => {
+    getData();
+    // getTotal();
+  }, []);
   return (
     <div>
       <div className={styles.cont1}>
         <div className={styles.q1}>
           <h1
             style={{
-              fontSize: "24px",
+              fontSize: "16px",
               letterSpacing: "5px",
               wordSpacing: "5x",
             }}
@@ -49,11 +122,16 @@ export const Cart = () => {
       </div>
       <div className={styles.cart}>
         <div className={styles.cart1}>
-          <Cartcard />
-          <Cartcard />
-          <Cartcard />
-          <Cartcard />
-          <Cartcard />
+          {/* data */}
+          {data.map((el) => (
+            <Cartcard
+              key={el._id}
+              {...el}
+              Increaseq={Increaseq}
+              Decq={Decq}
+              DeleteData={DeleteData}
+            />
+          ))}
         </div>
         <div className={styles.cart2}>
           <div className={styles.c1}>
@@ -112,7 +190,7 @@ export const Cart = () => {
                 <h1>Subtotal</h1>
               </div>
               <div>
-                <h1>INR {"12345"}</h1>
+                <h1>INR {total}</h1>
               </div>
             </div>
           </div>

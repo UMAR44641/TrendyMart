@@ -54,3 +54,16 @@
 .c12 a {
   border-bottom: 2px solid;
 }
+@media all and (min-width: 250px) and (max-width: 800px) {
+  .cart {
+    display: flex;
+    flex-direction: column;
+  }
+  .cart1,
+  .cart2 {
+    width: 100%;
+  }
+  .q1 {
+    width: 100%;
+  }
+}
