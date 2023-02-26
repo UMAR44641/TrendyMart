@@ -54,7 +54,7 @@ const MensShorts = () => {
   // right: 0;
   // width: 300px;
   return (
-    <div style={{ display: "flex",gap:"5px",padding:"0px 15px"}}>
+    <div style={{ display: "flex",gap:"5px",padding:"0px 15px",marginBottom:"20px"}}>
       <Box  position="relative" width="25%"  display={{ base: "none", lg: "block" }}>
         <Box display={{ base: "none", lg: "block" }}  position="sticky" top="138px" left="20px" width="100%">
         <Box width="100%" display={{ base: "none", lg: "block" }}  >
