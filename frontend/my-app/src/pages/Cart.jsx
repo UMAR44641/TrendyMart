@@ -4,6 +4,7 @@ import { Cartcard } from "../components/ranbir/Cartcard";
 import styles from "./cart.module.css";
 export const Cart = () => {
   const [data, setData] = useState([]);
+  console.log(data)
   const t = JSON.parse(localStorage.getItem("loginData")) || null;
   const getData = async () => {
     axios
@@ -14,6 +15,27 @@ export const Cart = () => {
       })
       .then((res) => setData(res.data));
   };
+
+
+
+
+  const handleCheckout= ()=>{
+
+    axios.post(`http://localhost:8080/api/stripe/create-checkout-session`,{
+      data
+    }).then((res)=>{
+      if(res.data.url){
+        window.location.href=res.data.url;
+      }
+    }).catch((err)=>{
+      console.log(err.message)
+    })
+   
+  }
+
+
+
+
   useEffect(() => {
     // console.log(token);
 
@@ -149,6 +171,7 @@ export const Cart = () => {
                 color: "white",
                 letterSpacing: "2px",
               }}
+              onClick={handleCheckout}
             >
               PROCEED TO CHECKOUT
             </button>
