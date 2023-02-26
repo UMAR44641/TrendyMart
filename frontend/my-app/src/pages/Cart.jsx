@@ -4,6 +4,10 @@ import { Cartcard } from "../components/ranbir/Cartcard";
 import styles from "./cart.module.css";
 export const Cart = () => {
   const [data, setData] = useState([]);
+
+  console.log(data)
+  const t = JSON.parse(localStorage.getItem("loginData")) || null;
+
   const [total, setTotal] = useState(0);
   // const [count, setCount] = useState(data);
   const { token } = JSON.parse(localStorage.getItem("loginData")) || null;
@@ -15,6 +19,7 @@ export const Cart = () => {
     );
     setTotal(totalPrice);
   };
+
   const getData = async () => {
     axios
       .get("https://courageous-tuxedo-dog.cyclic.app/cart", {
@@ -28,6 +33,31 @@ export const Cart = () => {
       });
     getTotal();
   };
+
+
+
+
+
+  const handleCheckout= ()=>{
+
+    axios.post(`http://localhost:8080/api/stripe/create-checkout-session`,{
+      data
+    }).then((res)=>{
+      if(res.data.url){
+        window.location.href=res.data.url;
+      }
+    }).catch((err)=>{
+      console.log(err.message)
+    })
+   
+  }
+
+
+
+
+  useEffect(() => {
+    // console.log(token);
+
   const Increaseq = async (_id) => {
     fetch(
       `https://courageous-tuxedo-dog.cyclic.app/cart/increasequantity/${_id}`,
@@ -59,6 +89,7 @@ export const Cart = () => {
         return res.json();
       })
       .then((res) => getData());
+
 
     // getData();
   };
@@ -209,6 +240,7 @@ export const Cart = () => {
                 color: "white",
                 letterSpacing: "2px",
               }}
+              onClick={handleCheckout}
             >
               PROCEED TO CHECKOUT
             </button>
