@@ -4,6 +4,7 @@ import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 
 const Button = styled.button`
@@ -98,18 +99,9 @@ function PrevArrow(props) {
 }
 
 const RecentlySlider = ({category}) => {
-  const [data, setData] = React.useState([]);
+  const data = JSON.parse(localStorage.getItem("recently"));
  
-  const getData = async () => {
-    let res = await fetch(
-      `https://amazon-t415.onrender.com/products?category=${category}`
-    );
-    res = await res.json();
-    setData(res);
-  };
-   useEffect(() => {
-     getData();
-   }, [category]);
+
 
   const settings = {
     infinite: false,
@@ -166,47 +158,49 @@ const RecentlySlider = ({category}) => {
         </h1>
       </div>
       <Slider {...settings}>
-        {data?.slice(41, 48).map((e) => (
+        {data?.map((e) => (
           <Container>
-            <div
-              style={{
-                display: "grid",
-                border: "none",
-                gridTemplateColumns:"repeat()",
-                padding: "20px 8px",
-              }}
-            >
+            <Link to={`/products/${e._id}`}>
               <div
                 style={{
-                  width: "100%",
-                  height: "240px",
-                  overflow: "hidden",
+                  display: "grid",
+                  border: "none",
+                  gridTemplateColumns: "repeat()",
+                  padding: "20px 8px",
                 }}
               >
-                <SlideItem src={e.url} />
+                <div
+                  style={{
+                    width: "100%",
+                    height: "240px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <SlideItem src={e.url} />
+                </div>
               </div>
-            </div>
-            <TextDiv>
-              <h5
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  textAlign: "center",
-                  fontWeight: "bold",
-                  marginTop: "17px",
-                }}
-              >
-                {e.title}
-              </h5>
-              <p
-                style={{
-                  fontSize: "15px",
-                  marginTop: "5px",
-                }}
-              >
-                INR {e.price}
-              </p>
-            </TextDiv>
+              <TextDiv>
+                <h5
+                  style={{
+                    color: "black",
+                    fontSize: "17px",
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    marginTop: "17px",
+                  }}
+                >
+                  {e.title}
+                </h5>
+                <p
+                  style={{
+                    fontSize: "15px",
+                    marginTop: "5px",
+                  }}
+                >
+                  INR {e.price}
+                </p>
+              </TextDiv>
+            </Link>
           </Container>
         ))}
       </Slider>
