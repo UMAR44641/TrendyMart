@@ -1,44 +1,21 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styles from "./Cartcard.module.css";
-export const Cartcard = ({ ...props }) => {
-  const { url, title, desc, price, quantity, category, _id } = props;
+export const Cartcard = (props) => {
+  const {
+    url,
+    title,
+    desc,
+    price,
+    quantity,
+    category,
+    _id,
+    Increaseq,
+    Decq,
+    DeleteData,
+  } = props;
   const { token } = JSON.parse(localStorage.getItem("loginData")) || null;
-  const Increaseq = async (_id) => {
-    axios
-      .patch(
-        `https://courageous-tuxedo-dog.cyclic.app/cart/increasequantity/${_id}`,
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      )
-      .then((res) => console.log(res.data));
-  };
-
-  const Decq = async (_id) => {
-    axios
-      .patch(
-        `https://courageous-tuxedo-dog.cyclic.app/cart/decreasequantity/${_id}`,
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      )
-      .then((res) => console.log(res.data));
-  };
-  const DeleteData = async (_id) => {
-    axios
-      .delete(`https://courageous-tuxedo-dog.cyclic.app/cart/delete/${_id}`, {
-        headers: {
-          authorization: token,
-        },
-      })
-      .then((res) => console.log(res.data));
-  };
-
+  console.log(props);
   useEffect(() => {
     console.log(token);
     console.log(_id);

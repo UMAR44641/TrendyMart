@@ -4,23 +4,63 @@ import { Cartcard } from "../components/ranbir/Cartcard";
 import styles from "./cart.module.css";
 export const Cart = () => {
   const [data, setData] = useState([]);
-  const t = JSON.parse(localStorage.getItem("loginData")) || null;
+  const { token } = JSON.parse(localStorage.getItem("loginData")) || null;
   const getData = async () => {
     axios
       .get("https://courageous-tuxedo-dog.cyclic.app/cart", {
         headers: {
-          authorization: t.token,
+          authorization: token,
         },
       })
       .then((res) => setData(res.data));
   };
-  useEffect(() => {
-    // console.log(token);
-
+  const Increaseq = async (_id) => {
+    fetch(
+      `https://courageous-tuxedo-dog.cyclic.app/cart/increasequantity/${_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
+  const Decq = async (_id) => {
+    let res = await axios.patch(
+      `https://courageous-tuxedo-dog.cyclic.app/cart/decreasequantity/${_id}`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    console.log(res.data);
+  };
+  const DeleteData = async (_id) => {
+    let res = await axios.delete(
+      `https://courageous-tuxedo-dog.cyclic.app/cart/delete/${_id}`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    console.log(res.data);
     getData();
-    // setTimeout(() => {
-    //   console.log(data);
-    // }, 5000);
+  };
+  useEffect(() => {
+    console.log("cart");
+    getData();
+    setTimeout(() => {
+      console.log(data);
+    }, 5000);
   }, []);
   return (
     <div>
@@ -71,7 +111,13 @@ export const Cart = () => {
         <div className={styles.cart1}>
           {/* data */}
           {data.map((el) => (
-            <Cartcard key={el._id} {...el} />
+            <Cartcard
+              key={el._id}
+              {...el}
+              Increaseq={Increaseq}
+              Decq={Decq}
+              DeleteData={DeleteData}
+            />
           ))}
         </div>
         <div className={styles.cart2}>
