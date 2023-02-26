@@ -10,16 +10,12 @@ export const Cartcard = (props) => {
     quantity,
     category,
     _id,
+
     Increaseq,
     Decq,
     DeleteData,
   } = props;
-  const { token } = JSON.parse(localStorage.getItem("loginData")) || null;
-  console.log(props);
-  useEffect(() => {
-    console.log(token);
-    console.log(_id);
-  }, []);
+
   return (
     <div>
       <div className={styles.b1}>
@@ -36,7 +32,7 @@ export const Cartcard = (props) => {
                 <p>{desc}</p>
               </div>
               <div className={styles.b2212}>
-                <p>WEB ID : {Math.ceil(Math.random() * 100) + 1}</p>
+                <p>WEB ID : {_id}</p>
               </div>
               <div className={styles.b2212}>
                 <p>Category: {category}</p>
@@ -45,7 +41,7 @@ export const Cartcard = (props) => {
             </div>
             <div className={styles.b222}>
               <div className={styles.b2221}>
-                <p>INR {price}</p>
+                <p>INR {Math.ceil(price)}</p>
               </div>
               <div className={styles.b2222}>
                 <div className={styles.b22221}>
