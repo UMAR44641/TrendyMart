@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate,useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useToast } from '@chakra-ui/react';
 
@@ -8,7 +8,6 @@ const PrivateRoute = ({children}) => {
   return store.auth
  });
  const toast=useToast();
- const {pathname}=useLocation()
  if(isAuth){
 return children;
  }else{
@@ -20,10 +19,7 @@ return children;
    isClosable: true,
    position:"top"
  });
-  return <Navigate to="/"
-  state={{from:pathname}}
-  replace
-  />
+  return <Navigate to="/"/>
  }
 }
 
