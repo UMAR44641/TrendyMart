@@ -15,7 +15,7 @@ export const Cart = () => {
     );
     setTotal(totalPrice);
   };
-  const getData = () => {
+  const getData = async () => {
     axios
       .get("https://courageous-tuxedo-dog.cyclic.app/cart", {
         headers: {
@@ -24,8 +24,9 @@ export const Cart = () => {
       })
       .then((res) => {
         setData(res.data);
-      })
-      .then((res) => getTotal());
+        console.log(res.data);
+      });
+    getTotal();
   };
   const Increaseq = async (_id) => {
     fetch(
@@ -96,7 +97,7 @@ export const Cart = () => {
               fontSize: "12px",
             }}
           >
-            BAG ID: {Math.ceil(Math.random() * 100) + 1}
+            BAG ID: {"121213"}
           </p>
         </div>
         <div className={styles.but1}>
