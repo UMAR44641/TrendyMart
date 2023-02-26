@@ -4,6 +4,7 @@ import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 
 const Button = styled.button`
@@ -104,7 +105,7 @@ const RecommendSlider = ({category}) => {
   }, [category]);
   const getData = async () => {
     let res = await fetch(
-      `https://amazon-t415.onrender.com/products?category=${category}`
+      `https://courageous-tuxedo-dog.cyclic.app/products?category=${category}`
     );
     res = await res.json();
     setData(res);
@@ -158,52 +159,56 @@ const RecommendSlider = ({category}) => {
   return (
     <div style={{ width: "75%", margin: "auto", marginTop: "50px" }}>
       <div style={{ width: "100%", margin: "auto" }}>
-        <h1 style={{ fontSize: "20px", fontWeight: "bold",marginBottom:"20px" }}>
+        <h1
+          style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "20px" }}
+        >
           RECOMMENDED FOR YOU
         </h1>
       </div>
       <Slider {...settings}>
         {data?.slice(22, 40).map((e) => (
           <Container>
-            <div
-              style={{
-                display: "flex",
-                border: "none",
-                justifyContent: "center",
-                padding: "20px 8px",
-              }}
-            >
+            <Link to={`/products/${e._id}`}>
               <div
                 style={{
-                  width: "100%",
-                  height: "240px",
-                  overflow: "hidden",
+                  display: "flex",
+                  border: "none",
+                  justifyContent: "center",
+                  padding: "20px 8px",
                 }}
               >
-                <SlideItem src={e.url} />
+                <div
+                  style={{
+                    width: "100%",
+                    height: "240px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <SlideItem src={e.url} />
+                </div>
               </div>
-            </div>
-            <TextDiv>
-              <h5
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  textAlign: "center",
-                  fontWeight: "bold",
-                  marginTop: "17px",
-                }}
-              >
-                {e.title}
-              </h5>
-              <p
-                style={{
-                  fontSize: "15px",
-                  marginTop: "5px",
-                }}
-              >
-                INR {e.price}
-              </p>
-            </TextDiv>
+              <TextDiv>
+                <h5
+                  style={{
+                    color: "black",
+                    fontSize: "17px",
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    marginTop: "17px",
+                  }}
+                >
+                  {e.title}
+                </h5>
+                <p
+                  style={{
+                    fontSize: "15px",
+                    marginTop: "5px",
+                  }}
+                >
+                  INR {e.price}
+                </p>
+              </TextDiv>
+            </Link>
           </Container>
         ))}
       </Slider>

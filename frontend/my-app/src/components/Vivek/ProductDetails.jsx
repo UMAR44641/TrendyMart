@@ -28,12 +28,14 @@ import "./details.css"
 import {MinusIcon,AddIcon} from "@chakra-ui/icons"
 import RecommendSlider from "./Slider";
 import RecentlySlider from "./RecentlySlider";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 
 const ProductDetails = () => {
-  const {id} = useParams()
+  const {_id} = useParams()
+  
   const toast = useToast();
   const [active,setActive] = useState(null)
   const [activeColor, setActiveColor] = useState(null);
@@ -41,19 +43,32 @@ const ProductDetails = () => {
   const [text,setText] = useState("")
   const [colorText, setColorText] = useState("Red");
   const [product,setProduct] = useState({})
-  console.log({id})
+  console.log({_id})
+  const token = JSON.parse(localStorage.getItem("loginData"))
+  const { isAuth } = useSelector((store) => {
+    return store.auth;
+  });
   const getProduct=async()=>{
     let res = await fetch(
-      `https://courageous-tuxedo-dog.cyclic.app/products/${id}`
+      `https://courageous-tuxedo-dog.cyclic.app/products/${_id}`
     );
     res = await res.json()
     setProduct(res)
-    // console.log(res)
+    let arr = JSON.parse(localStorage.getItem("recently")) || [];
+    if (!arr.some((item) => item._id === res._id)) {
+      arr.push(res);
+      if (arr.length > 10) {
+        arr.shift();
+      }
+      localStorage.setItem("recently", JSON.stringify(arr));
+    }
   }
   useEffect(()=>{
     getProduct()
-  },[id])
-  const {url,title,desc,price,category,cutprice} = product
+  },[_id])
+  const {url,title,desc,price,category,cutprice,id} = product
+  
+  console.log([product])
   function handleButtonClick(button,buttonText){
     setActive(button)
     setDisable(true)
@@ -64,29 +79,37 @@ const ProductDetails = () => {
     setActiveColor(button);
   }
   const addProduct=async()=>{
-        let data ={
+        let payload ={
           url:url,
           title:title,
           desc:desc,
           category:category,
           price:price,
           cutprice:cutprice,
-          id:id,
-          quantity:1
+          _id:_id
         }
-        let res = await fetch(
-          "https://courageous-tuxedo-dog.cyclic.app/cart/upload",
-          {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-              "Content-type": "application/json",
-              Authorization: localStorage.getItem("token"),
-            },
-          }
-        );
-        res = await res.json();
-        console.log(res)
+        console.log(typeof id)
+      
+         fetch(
+            "https://courageous-tuxedo-dog.cyclic.app/cart/upload",
+            {
+            
+              method: "POST",
+              body: JSON.stringify(payload),
+              headers: {
+                "Content-type": "application/json",
+                Authorization: token.token,
+              },
+            }
+          ).then((res)=>{
+            return res.json()
+          }).then((res)=>{
+            console.log(res)
+          }).catch((err)=>{
+            console.log(err)
+          });
+  
+     
   }
   const handleBag=()=>{
     onOpen()
@@ -112,7 +135,7 @@ const ProductDetails = () => {
     <div>
       <div className="container">
         <div className="imageBox">
-          <img style={{margin:"auto",height:"600px"}} src={url} alt="" />
+          <img style={{ margin: "auto", height: "70%" }} src={url} alt="" />
         </div>
         <div className="detail">
           <div style={{ textAlign: "left" }}>
@@ -337,8 +360,8 @@ const ProductDetails = () => {
             mb={10}
             size={"lg"}
             py={"2"}
-            bg={useColorModeValue("gray.900", "gray.50")}
-            color={useColorModeValue("white", "gray.900")}
+            bg={"gray.900"}
+            color={"white"}
             textTransform={"uppercase"}
             _hover={{
               transform: "translateY(2px)",
@@ -464,23 +487,26 @@ const ProductDetails = () => {
           </Center>
           <Grid mt={5} templateColumns="repeat(1, 1fr)" gap={10}>
             {data.slice(16, 21).map((item) => (
-              <GridItem key={item.id}>
-                <Center>
-                  <Image height="200px" src={item.url} />
-                </Center>
-                <Center color="black" fontSize="ms">
-                  {item.title}
-                </Center>
-                <Center mt={1} fontSize="ms">
-                  INR {item.price}
-                </Center>
-              </GridItem>
+              <Link to={`/products/${item._id}`} key={item.id}>
+                <GridItem>
+                  <Center>
+                    <Image height="200px" src={item.url} />
+                  </Center>
+                  <Center color="black" fontSize="ms">
+                    {item.title}
+                  </Center>
+                  <Center mt={1} fontSize="ms">
+                    INR {item.price}
+                  </Center>
+                </GridItem>
+              </Link>
             ))}
           </Grid>
         </div>
       </div>
       <hr className="hr" />
-      <RecommendSlider category ={category} />
+
+      <RecentlySlider category={category} />
       <hr className="hr" />
       <Accordion
         allowMultiple
@@ -530,10 +556,7 @@ const ProductDetails = () => {
         </AccordionItem>
       </Accordion>
       <hr className="hr" />
-      <div>
-        <RecentlySlider/>
-
-      </div>
+      <RecommendSlider category={category} />
       <hr className="hr" />
       <Drawer
         isOpen={isOpen}
@@ -549,15 +572,12 @@ const ProductDetails = () => {
 
           <DrawerBody>
             <Center>
-              <Image
-                src={url}
-                style={{ margin: "auto" }}
-              />
+              <Image src={url} style={{ margin: "auto" }} />
             </Center>
             <Center mt={5}>1 item added:</Center>
             <Center mt={1}>
-              <p style={{ color: "black", fontWeight: "bold" }}>Total</p>: INR
-               {" "}{price}
+              <p style={{ color: "black", fontWeight: "bold" }}>Total</p>: INR{" "}
+              {price}
             </Center>
             <Button
               ref={btnRef}
