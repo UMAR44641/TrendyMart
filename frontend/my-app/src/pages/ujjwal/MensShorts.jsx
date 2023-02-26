@@ -24,30 +24,34 @@ const MensShorts = () => {
   const [data, setdata] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("left");
-  const order = searchParams.getAll("order")[0];
+  // const order = searchParams.getAll("order")[0];
 
   const getData = (params) => {
     axios
       .get("https://courageous-tuxedo-dog.cyclic.app/products", params)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setdata(res.data);
       });
   };
 //useeffect for rerendering
   useEffect(() => {
-    const price = searchParams.getAll("price")[0];
+    const price1 = +searchParams.getAll("maxprice")[0];
+    const price2 = +searchParams.getAll("minprice")[0];
+    const sort = searchParams.getAll("sort")[0];
     const paramObj = {
       params: {
         category: searchParams.getAll("category"),
-        _sort: order && "price",
-        _order: order,
-        maxprice:price
+        sort: sort,
+        maxprice:price1,
+        minprice:price2,
       },
     };
+    // console.log("params",paramObj)
     getData(paramObj);
   }, [location.search]);
-
+let title=searchParams.getAll("category")
+// console.log(title[0],"title")
   // console.log(data);
   // position: fixed;
   // bottom: 0;
@@ -94,26 +98,28 @@ const MensShorts = () => {
             
           }}
         >
-          <Box fontSize="20px" >Products (1-60 of 846 Items)</Box>
+          {/* <Box fontSize="20px" > Products (1-60 of 846 Items)</Box> */}
+          <div style={{textTransform:"capitalize",fontSize:"18px"}}>
+         {title[0]} Products (1-60 of 846 Items)
+  </div>
           <Box display={{lg:"flex",base:"none"}}>
             <div style={{display:"flex",alignItems:"center"}} >
               <label style={{ fontWeight: "bolder",marginRight:"7px" }}>Sort By:</label>
-              <select name="cars" id="cars">
-                <option value="volvo">Featured</option>
-                <option value="saab">New Arrival</option>
-                <option value="mercedes">Best Sellers</option>
-                <option value="audi">Price(high-low)</option>
-                <option value="audi">Price(low-high)</option>
+              <select >
+                <option >Featured</option>
+                <option >New Arrival</option>
+                <option >Best Sellers</option>
+                <option >Price(high-low)</option>
+                <option >Price(low-high)</option>
               </select>
             </div>
             <div style={{display:"flex",alignItems:"center",marginLeft:"20px"}}>
               <label style={{ fontWeight: "bolder",marginRight:"7px" }}>Page:</label>
-              <select name="cars" id="cars">
-                <option value="volvo">Featured</option>
-                <option value="saab">New Arrival</option>
-                <option value="mercedes">Best Sellers</option>
-                <option value="audi">Price(high-low)</option>
-                <option value="audi">Price(low-high)</option>
+              <select >
+                <option >1 of 4</option>
+                <option >2 of 2</option>
+                <option >3 of 2</option>
+                <option >4 of 2</option>
               </select>
             </div>
           </Box>

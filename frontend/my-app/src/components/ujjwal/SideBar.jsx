@@ -27,9 +27,9 @@ export const SideBar = () => {
   const [price, setprice] = useState([100,800]);
   const [category, setcategory] = useState(initialcategory[0] || "");
   const [order, setOrder] = useState(initialOrder[0] || "");
-console.log(price)
+// console.log(price)
   // console.log(itemType);//
-  console.log(searchParams.getAll("itemType"));
+  // console.log(searchParams.getAll("itemType"));
 
   // const handelFilter = (e) => {
   //   let newitemType = [...itemType];
@@ -71,7 +71,7 @@ console.log(price)
     <div
       style={{ fontWeight: "revert-layer", width: "100%" }}
     >
-      <Accordion defaultIndex={[0,1]} allowMultiple>
+      <Accordion defaultIndex={[0,1,2]} allowMultiple>
         <AccordionItem>
           <h2>
             <AccordionButton>
@@ -105,7 +105,7 @@ console.log(price)
                     value="kids"
                     defaultChecked={category === "kids"}
                   />
-                  <label htmlFor="">Kids</label>
+                  <label >Kids</label>
                 </div>
                 <div>
                   <input
@@ -115,7 +115,7 @@ console.log(price)
                     value="mens"
                     defaultChecked={category === "mens"}
                   />
-                  <label htmlFor="">Mens</label>
+                  <label >Mens</label>
                 </div>
                 <div>
                   <input
@@ -125,7 +125,7 @@ console.log(price)
                     value="womens"
                     defaultChecked={category === "womens"}
                   />
-                  <label htmlFor="">Womens</label>
+                  <label >Womens</label>
                 </div>
               </div>
             </div>
@@ -164,7 +164,7 @@ console.log(price)
                     value="asc"
                     defaultChecked={order === "asc"}
                   />
-                  <label htmlFor="">Ascending</label>
+                  <label >Ascending</label>
                 </div>
                 <div>
                   <input
@@ -174,7 +174,7 @@ console.log(price)
                     value="desc"
                     defaultChecked={order === "desc"}
                   />
-                  <label htmlFor="">Decending</label>
+                  <label >Decending</label>
                 </div>
               </div>
             </div>
@@ -206,19 +206,20 @@ console.log(price)
                 alignItems: "flex-start",
               }}
             >
+              <div style={{display:"flex",justifyContent:"space-between",gap:"20px",alignItems:"center",marginBottom:"15px"}}><h3><b>MinPrice: {price[0]}</b></h3>    <h3><b>MaxPrice : {price[1]}</b></h3></div>
               <RangeSlider
                 defaultValue={[300, 1000]}
                 min={0}
                 max={3000}
                 step={30}
                 onChange={(val)=>setprice(val)}
-                onChangeEnd={(val) => console.log(val)}
+                // onChangeEnd={(val) => console.log(val)}
               >
-                <RangeSliderTrack bg="red.100">
-                  <RangeSliderFilledTrack bg="tomato" />
+                <RangeSliderTrack bg="blue.100">
+                  <RangeSliderFilledTrack bg="blue" />
                 </RangeSliderTrack>
-                <RangeSliderThumb bgColor="red.500" boxSize={4} index={0} />
-                <RangeSliderThumb bgColor="red.500" boxSize={4} index={1} />
+                <RangeSliderThumb bgColor="blue.500" boxSize={4} index={0} />
+                <RangeSliderThumb bgColor="blue.500" boxSize={4} index={1} />
               </RangeSlider>
             </div>
           </AccordionPanel>
@@ -286,11 +287,11 @@ console.log(price)
                 >
                   <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Blazers</label>
+                    <label for="scales"> Classic</label>
                   </div>
                   <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Coats</label>
+                    <label for="scales"> Regular</label>
                   </div>
                 </div>
               </AccordionPanel>
@@ -321,11 +322,11 @@ console.log(price)
                 >
                   <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Blazers</label>
+                    <label for="scales"> Denim</label>
                   </div>
                   <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Coats</label>
+                    <label for="scales"> Leather</label>
                   </div>
                 </div>
               </AccordionPanel>
@@ -358,11 +359,11 @@ console.log(price)
                 >
                   <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Blazers</label>
+                    <label for="scales"> Sports</label>
                   </div>
                   <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Coats</label>
+                    <label for="scales"> Beach</label>
                   </div>
                 </div>
               </AccordionPanel>
