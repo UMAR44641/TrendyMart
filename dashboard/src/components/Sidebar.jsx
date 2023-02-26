@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+
 import {
   IconButton,
   Avatar,
@@ -11,6 +12,7 @@ import {
   useColorModeValue,
   Drawer,
   DrawerContent,
+  Heading,
   Text,
   useDisclosure,
   Menu,
@@ -28,12 +30,15 @@ import {
   FiBell,
   FiChevronDown,
 } from "react-icons/fi";
-import { Link,useLocation } from "react-router-dom";
+import { Link,useLocation,useNavigate } from "react-router-dom";
 import ProductsPage from "../Pages/ProductPage";
 import Dashboard from "../Pages/Dashboard";
 import Login from "../Pages/Login";
 import Users from "../Pages/Users";
 import Signup from "../Pages/Signup";
+import { useSelector, useDispatch } from "react-redux";
+import {logout} from "../redux/auth/auth.action"
+import Orders from "../Pages/Orders";
 
 
 
@@ -49,10 +54,16 @@ const LinkItems = [
     icon: FiCompass,
     path: "/products",
   },
+  {
+    name: "Orders",
+    icon: FiCompass,
+    path: "/orders",
+  },
   { name: "Login", icon: FiStar, path: "/" },
 ];
 
 export default function SidebarWithHeader() {
+
   const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -87,6 +98,8 @@ export default function SidebarWithHeader() {
           <Users />
         ) : location.pathname === "/dashboard" ? (
           <Dashboard />
+        ) : location.pathname === "/orders" ? (
+          <Orders />
         ) : (
           ""
         )}
@@ -161,6 +174,13 @@ const NavItem = ({ icon, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  const { isAuth } = useSelector((store) => {
+    return store.auth;
+  });
+  const navigate=useNavigate()
+  const dispatch = useDispatch();
+  let adminLoginData = JSON.parse(localStorage.getItem("adminLoginData")) || "";
+  let name = adminLoginData ? adminLoginData.name : "";
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -197,48 +217,51 @@ const MobileNav = ({ onOpen, ...rest }) => {
           aria-label="open menu"
           icon={<FiBell />}
         />
-        <Flex alignItems={"center"}>
-          <Menu>
-            <MenuButton
-              py={2}
-              transition="all 0.3s"
-              _focus={{ boxShadow: "none" }}
-            >
-              <HStack>
-                <Avatar
-                  size={"sm"}
-                  src={
-                    "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                  }
-                />
-                <VStack
-                  display={{ base: "none", md: "flex" }}
-                  alignItems="flex-start"
-                  spacing="1px"
-                  ml="2"
+        {isAuth ? (
+          <Flex alignItems={"center"}>
+            <Menu>
+              <MenuButton
+                py={2}
+                transition="all 0.3s"
+                _focus={{ boxShadow: "none" }}
+              >
+                <HStack>
+                  <VStack
+                    display={{ base: "none", md: "flex" }}
+                    alignItems="flex-start"
+                    spacing="1px"
+                    ml="2"
+                  >
+                    <Text fontSize="md">{name}</Text>
+                    <Text fontSize="xs" color="gray.600">
+                      Admin
+                    </Text>
+                  </VStack>
+                  <Box display={{ base: "none", md: "flex" }}>
+                    <FiChevronDown />
+                  </Box>
+                </HStack>
+              </MenuButton>
+              <MenuList
+                bg={useColorModeValue("white", "gray.900")}
+                borderColor={useColorModeValue("gray.200", "gray.700")}
+              >
+                <MenuItem
+                  onClick={() => {
+                    dispatch(logout());
+                    navigate("/")
+                  }}
                 >
-                  <Text fontSize="sm">Vivek Soni</Text>
-                  <Text fontSize="xs" color="gray.600">
-                    Admin
-                  </Text>
-                </VStack>
-                <Box display={{ base: "none", md: "flex" }}>
-                  <FiChevronDown />
-                </Box>
-              </HStack>
-            </MenuButton>
-            <MenuList
-              bg={useColorModeValue("white", "gray.900")}
-              borderColor={useColorModeValue("gray.200", "gray.700")}
-            >
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
-              <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
-            </MenuList>
-          </Menu>
-        </Flex>
+                  Sign out
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </Flex>
+        ) : (
+          <Link to="/signup">
+            <Heading fontSize="xl">Sign Up</Heading>
+          </Link>
+        )}
       </HStack>
     </Flex>
   );
