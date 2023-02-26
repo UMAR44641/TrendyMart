@@ -26,15 +26,23 @@ const MensShorts = () => {
   const [placement, setPlacement] = useState("left");
   // const order = searchParams.getAll("order")[0];
 
-  const getData = (params) => {
+  const getData = (params={minprice:700,maxprice:2000}) => {
     axios
       .get("https://courageous-tuxedo-dog.cyclic.app/products", params)
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setdata(res.data);
       });
   };
-//useeffect for rerendering
+// useeffect for rerendering
+useEffect(()=>{
+  const paramobj={
+    params:{
+      maxprice:700,
+    }
+  }
+  getData(paramobj)
+},[])
   useEffect(() => {
     const price1 = +searchParams.getAll("maxprice")[0];
     const price2 = +searchParams.getAll("minprice")[0];
@@ -49,7 +57,8 @@ const MensShorts = () => {
     };
     // console.log("params",paramObj)
     getData(paramObj);
-  }, [location.search]);
+  }, [location.search,]);
+
 let title=searchParams.getAll("category")
 // console.log(title[0],"title")
   // console.log(data);
@@ -100,7 +109,7 @@ let title=searchParams.getAll("category")
         >
           {/* <Box fontSize="20px" > Products (1-60 of 846 Items)</Box> */}
           <div style={{textTransform:"capitalize",fontSize:"18px"}}>
-         {title[0]} Products (1-60 of 846 Items)
+         {title[0]} Products ({data.length} Items)
   </div>
           <Box display={{lg:"flex",base:"none"}}>
             <div style={{display:"flex",alignItems:"center"}} >
@@ -135,7 +144,7 @@ let title=searchParams.getAll("category")
             margin={"auto"}
             gap={6}
           >
-            {data?.map((el) => (
+            {data&&data?.map((el) => (
               <MensProductCard key={el.id} {...el} />
             ))}
           </Grid>

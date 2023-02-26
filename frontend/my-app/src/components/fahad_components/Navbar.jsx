@@ -62,7 +62,7 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    console.log(products);
+    // console.log(products);
     setFilteredProducts(
       products.filter((product) =>
         product.desc.toLowerCase().includes(searchTerm.toLowerCase())
