@@ -27,9 +27,9 @@ export const SideBar = () => {
   const [price, setprice] = useState([100,800]);
   const [category, setcategory] = useState(initialcategory[0] || "");
   const [order, setOrder] = useState(initialOrder[0] || "");
-console.log(price)
+// console.log(price)
   // console.log(itemType);//
-  console.log(searchParams.getAll("itemType"));
+  // console.log(searchParams.getAll("itemType"));
 
   // const handelFilter = (e) => {
   //   let newitemType = [...itemType];
@@ -105,7 +105,7 @@ console.log(price)
                     value="kids"
                     defaultChecked={category === "kids"}
                   />
-                  <label htmlFor="">Kids</label>
+                  <label >Kids</label>
                 </div>
                 <div>
                   <input
@@ -115,7 +115,7 @@ console.log(price)
                     value="mens"
                     defaultChecked={category === "mens"}
                   />
-                  <label htmlFor="">Mens</label>
+                  <label >Mens</label>
                 </div>
                 <div>
                   <input
@@ -125,7 +125,7 @@ console.log(price)
                     value="womens"
                     defaultChecked={category === "womens"}
                   />
-                  <label htmlFor="">Womens</label>
+                  <label >Womens</label>
                 </div>
               </div>
             </div>
@@ -164,7 +164,7 @@ console.log(price)
                     value="asc"
                     defaultChecked={order === "asc"}
                   />
-                  <label htmlFor="">Ascending</label>
+                  <label >Ascending</label>
                 </div>
                 <div>
                   <input
@@ -174,7 +174,7 @@ console.log(price)
                     value="desc"
                     defaultChecked={order === "desc"}
                   />
-                  <label htmlFor="">Decending</label>
+                  <label >Decending</label>
                 </div>
               </div>
             </div>

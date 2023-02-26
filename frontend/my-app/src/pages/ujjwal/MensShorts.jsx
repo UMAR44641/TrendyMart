@@ -36,15 +36,18 @@ const MensShorts = () => {
   };
 //useeffect for rerendering
   useEffect(() => {
-    const price = searchParams.getAll("price")[0];
+    const price1 = +searchParams.getAll("maxprice")[0];
+    const price2 = +searchParams.getAll("minprice")[0];
+    const sort = searchParams.getAll("sort")[0];
     const paramObj = {
       params: {
         category: searchParams.getAll("category"),
-        _sort: order && "price",
-        _order: order,
-        maxprice:price
+        sort: sort,
+        maxprice:price1,
+        minprice:price2,
       },
     };
+    // console.log("params",paramObj)
     getData(paramObj);
   }, [location.search]);
 
