@@ -43,7 +43,7 @@ const user_id=loginData?loginData.id:"";
 
   const handleCheckout= ()=>{
 
-    axios.post(`http://localhost:8080/api/stripe/create-checkout-session`,{
+    axios.post(`https://defiant-fedora-yak.cyclic.app/api/stripe/create-checkout-session`,{
       data
     }).then((res)=>{
       if(res.data.url){
