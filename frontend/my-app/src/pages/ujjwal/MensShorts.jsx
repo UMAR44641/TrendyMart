@@ -50,7 +50,8 @@ const MensShorts = () => {
     // console.log("params",paramObj)
     getData(paramObj);
   }, [location.search]);
-
+let title=searchParams.getAll("category")
+console.log(title[0],"title")
   // console.log(data);
   // position: fixed;
   // bottom: 0;
@@ -97,26 +98,28 @@ const MensShorts = () => {
             
           }}
         >
-          <Box fontSize="20px" >Products (1-60 of 846 Items)</Box>
+          {/* <Box fontSize="20px" > Products (1-60 of 846 Items)</Box> */}
+          <div style={{textTransform:"capitalize",fontSize:"18px"}}>
+         {title[0]} Products (1-60 of 846 Items)
+  </div>
           <Box display={{lg:"flex",base:"none"}}>
             <div style={{display:"flex",alignItems:"center"}} >
               <label style={{ fontWeight: "bolder",marginRight:"7px" }}>Sort By:</label>
-              <select name="cars" id="cars">
-                <option value="volvo">Featured</option>
-                <option value="saab">New Arrival</option>
-                <option value="mercedes">Best Sellers</option>
-                <option value="audi">Price(high-low)</option>
-                <option value="audi">Price(low-high)</option>
+              <select >
+                <option >Featured</option>
+                <option >New Arrival</option>
+                <option >Best Sellers</option>
+                <option >Price(high-low)</option>
+                <option >Price(low-high)</option>
               </select>
             </div>
             <div style={{display:"flex",alignItems:"center",marginLeft:"20px"}}>
               <label style={{ fontWeight: "bolder",marginRight:"7px" }}>Page:</label>
-              <select name="cars" id="cars">
-                <option value="volvo">Featured</option>
-                <option value="saab">New Arrival</option>
-                <option value="mercedes">Best Sellers</option>
-                <option value="audi">Price(high-low)</option>
-                <option value="audi">Price(low-high)</option>
+              <select >
+                <option >1 of 4</option>
+                <option >2 of 2</option>
+                <option >3 of 2</option>
+                <option >4 of 2</option>
               </select>
             </div>
           </Box>

@@ -206,19 +206,20 @@ export const SideBar = () => {
                 alignItems: "flex-start",
               }}
             >
+              <div style={{display:"flex",justifyContent:"space-between",gap:"20px",alignItems:"center",marginBottom:"15px"}}><h3><b>MinPrice: {price[0]}</b></h3>    <h3><b>MaxPrice : {price[1]}</b></h3></div>
               <RangeSlider
                 defaultValue={[300, 1000]}
                 min={0}
                 max={3000}
                 step={30}
                 onChange={(val)=>setprice(val)}
-                onChangeEnd={(val) => console.log(val)}
+                // onChangeEnd={(val) => console.log(val)}
               >
-                <RangeSliderTrack bg="red.100">
-                  <RangeSliderFilledTrack bg="tomato" />
+                <RangeSliderTrack bg="blue.100">
+                  <RangeSliderFilledTrack bg="blue" />
                 </RangeSliderTrack>
-                <RangeSliderThumb bgColor="red.500" boxSize={4} index={0} />
-                <RangeSliderThumb bgColor="red.500" boxSize={4} index={1} />
+                <RangeSliderThumb bgColor="blue.500" boxSize={4} index={0} />
+                <RangeSliderThumb bgColor="blue.500" boxSize={4} index={1} />
               </RangeSlider>
             </div>
           </AccordionPanel>
@@ -286,11 +287,11 @@ export const SideBar = () => {
                 >
                   <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Blazers</label>
+                    <label for="scales"> Classic</label>
                   </div>
                   <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Coats</label>
+                    <label for="scales"> Regular</label>
                   </div>
                 </div>
               </AccordionPanel>
@@ -321,11 +322,11 @@ export const SideBar = () => {
                 >
                   <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Blazers</label>
+                    <label for="scales"> Denim</label>
                   </div>
                   <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Coats</label>
+                    <label for="scales"> Leather</label>
                   </div>
                 </div>
               </AccordionPanel>
@@ -358,11 +359,11 @@ export const SideBar = () => {
                 >
                   <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Blazers</label>
+                    <label for="scales"> Sports</label>
                   </div>
                   <div style={{ margin: "10px" }}>
                     <input type="checkbox" id="scales" name="price" />
-                    <label for="scales"> Coats</label>
+                    <label for="scales"> Beach</label>
                   </div>
                 </div>
               </AccordionPanel>
