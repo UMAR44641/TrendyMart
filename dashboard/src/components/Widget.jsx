@@ -4,12 +4,64 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
+import {Link} from "react-router-dom"
+import axios from "axios"
+import React,{useState,useEffect} from "react";
 
 const Widget = ({ type }) => {
+  const token = JSON.parse(localStorage.getItem("adminLoginData"));
+  const [users, setUsers] = useState();
+  const getUsers = async () => {
+    try {
+      let response = await axios.get(
+        "https://courageous-tuxedo-dog.cyclic.app/users/"
+      ,{
+        headers:{
+          Authorization:token.token
+        }
+      });
+      setUsers(response.data.length);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const [products,setProducts]= useState()
+    const getData = async () => {
+      try {
+        let response = await axios.get(
+          "https://courageous-tuxedo-dog.cyclic.app/products"
+        );
+        setProducts(response.data.length)
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    const [orders,setOrders] = useState([])
+    const totalPrice = orders.reduce((acc, order) => acc + order.price, 0);
+    const getData4 = async () => {
+      try {
+        let response = await axios.get(
+          "https://courageous-tuxedo-dog.cyclic.app/orders/"
+        ,{
+          headers:{
+            Authorization:token.token
+          }
+        });
+        console.log(response.data)
+        setOrders(response.data)
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    useEffect(() => {
+      getData();
+      getUsers()
+      getData4()
+    }, []);
   let data;
 
   //temporary
-  const amount = 100;
   const diff = 20;
 
   switch (type) {
@@ -17,7 +69,8 @@ const Widget = ({ type }) => {
       data = {
         title: "USERS",
         isMoney: false,
-        link: "See all users",
+        length:users,
+        link: <Link to="/users">See all users</Link>,
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -33,7 +86,8 @@ const Widget = ({ type }) => {
       data = {
         title: "ORDERS",
         isMoney: false,
-        link: "View all orders",
+        length:orders.length,
+        link: <Link to="/orders">See all orders</Link>,
         icon: (
           <ShoppingCartOutlinedIcon
             className="icon"
@@ -49,6 +103,7 @@ const Widget = ({ type }) => {
       data = {
         title: "EARNINGS",
         isMoney: true,
+        length:totalPrice,
         link: "View net earnings",
         icon: (
           <MonetizationOnOutlinedIcon
@@ -60,9 +115,10 @@ const Widget = ({ type }) => {
       break;
     case "balance":
       data = {
-        title: "BALANCE",
+        title: "PRODUCTS",
         isMoney: true,
-        link: "See details",
+        length:products,
+        link: <Link to="/products">See Products</Link>,
         icon: (
           <AccountBalanceWalletOutlinedIcon
             className="icon"
@@ -83,7 +139,7 @@ const Widget = ({ type }) => {
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {data.isMoney && "$"} {amount}
+          {data.length}
         </span>
         <span className="link">{data.link}</span>
       </div>
