@@ -102,7 +102,7 @@ export const Cartcard = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className={styles.b22222}>
+                <div className={styles.b22222} style={{ marginLeft: "2px" }}>
                   <h3>INR {eval(price * quantity)}</h3>
                 </div>
               </div>
