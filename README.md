@@ -5,6 +5,9 @@
 For Frontend : HTML5, CSS3, Javascript, ES6, ReactJS Redux.
 For Backend:  Node, express and Mongodb
 For Styling :- BootStrap , Chakra UI (UI Styling Library)
+
+--LANDING PAGE--
+
 ![Screenshot (84)](https://user-images.githubusercontent.com/112633484/221491116-81d15e1e-aa91-4eb5-a266-5d3dab64aaff.png)
 
 It is a collabrative project completed in 5 days by a team of five members using React, ui chakra,node, express, monogodb . An e-commerce website where you can shop for clothing. 
