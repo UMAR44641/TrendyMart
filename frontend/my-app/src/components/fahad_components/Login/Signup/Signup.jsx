@@ -10,7 +10,8 @@ import {
  FormErrorMessage,
  Button,
  Checkbox,
- Stack
+ Stack,
+ Text
  
 } from '@chakra-ui/react';
 
@@ -28,6 +29,7 @@ import {
 
 import { useToast } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+
 
 const Form1 = ({name,setname,email,setemail,password,setpassword,error1,seterror1}) => {
  const [showPassword, setShowPassword] = React.useState(false);
@@ -316,6 +318,7 @@ const Signup = ({register,openRegister,closeRegister,getOn}) => {
             ) : null}
           </Flex>
           </ButtonGroup>
+          <Text fontSize={{sm:"16px",base:"12px"}} fontWeight={600} mt="10px">If you are an admin, <a style={{textDecoration:"underline"}} href="https://trendy-dashboard.vercel.app/">Register from here.</a> </Text>
          </ModalBody>
 
         </ModalContent>
