@@ -1,5 +1,5 @@
 
-import React,{ useRef } from "react";
+import React,{ useRef,useState } from "react";
 
 
   
@@ -29,11 +29,14 @@ import {
   Select,Textarea,
 } from "@chakra-ui/react";
 
+
 const IMAGE =
   "https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80";
 
-export default function ProductCard({item}) {
+export default function ProductCard({item,onDelete,onUpdate}) {
+  const token = JSON.parse(localStorage.getItem("adminLoginData"));
     const inputRef = useRef(null);
+  
 
     const handleButtonClick = () => {
       inputRef.current.click();
@@ -41,6 +44,32 @@ export default function ProductCard({item}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const cancelRef = React.useRef();
+   function handleDeleteClick() {
+     onDelete(item._id);
+   }
+ const [title, setTitle] = useState(item.title);
+ const [desc, setDesc] = useState(item.desc);
+ const [category, setCategory] = useState(item.category);
+ const [price, setPrice] = useState(item.price);
+ const [stock, setStock] = useState(item.stock);
+ const [cutprice, setCutPrice] = useState(item.cutprice);
+ const [url, setUrl] = useState(item.url);
+ const handleImageChange = (event) => {
+   const file = event.target.files[0];
+   const reader = new FileReader();
+   reader.readAsDataURL(file);
+   reader.onloadend = () => {
+     setUrl(reader.result);
+   };
+ };
+
+ const editProduct=()=>{
+  const payload = {
+      title,desc,price,stock,cutprice,url,category
+    }
+    onUpdate(item._id,payload)
+ }
+  
   return (
     <Center py={12}>
       <Box
@@ -101,10 +130,12 @@ export default function ProductCard({item}) {
             </Text> */}
           </Stack>
           <Stack direction={"row"} align={"center"}>
-            <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+            <Button  ref={btnRef} colorScheme="teal" onClick={onOpen}>
               Edit
             </Button>
-            <Button colorScheme="red">Delete</Button>
+            <Button onClick={handleDeleteClick} colorScheme="red">
+              Delete
+            </Button>
           </Stack>
         </Stack>
       </Box>
@@ -119,30 +150,67 @@ export default function ProductCard({item}) {
           <DrawerCloseButton />
           <DrawerHeader>Update the product</DrawerHeader>
           <DrawerBody>
-            <Stack spacing="24px">
+            <Stack>
               <Box>
                 <FormLabel htmlFor="brand">Brand</FormLabel>
-                <Input id="username" placeholder="Change brand" />
+                <Input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Put a brand"
+                />
+              </Box>
+              <Box>
+                <FormLabel htmlFor="brand">Category</FormLabel>
+                <Input
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  placeholder="Put a category"
+                />
+              </Box>
+              <Box>
+                <FormLabel htmlFor="brand">Stock</FormLabel>
+                <Input
+                  value={stock}
+                  onChange={(e) => setStock(e.target.value)}
+                  placeholder="No. of stock"
+                />
               </Box>
 
               <Box>
                 <FormLabel htmlFor="url">Image</FormLabel>
                 <Input
                   type="file"
-                  ref={inputRef}
-                  display="none"
-                  onChange={(event) => console.log(event.target.files)}
+                  accept="image/*"
+                  onChange={handleImageChange}
                 />
-                <Button onClick={handleButtonClick}>Choose File</Button>
               </Box>
               <Box>
                 <FormLabel htmlFor="owner">Price</FormLabel>
-                <Input type="number" id="file" placeholder="Update price" />
+                <Input
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  type="number"
+                  placeholder="Put price"
+                />
+              </Box>
+              <Box>
+                <FormLabel htmlFor="brand">Cut Price</FormLabel>
+                <Input
+                  value={cutprice}
+                  onChange={(e) => setCutPrice(e.target.value)}
+                  type="number"
+                  id="cutprice"
+                  placeholder="Cut price"
+                />
               </Box>
 
               <Box>
                 <FormLabel htmlFor="desc">Description</FormLabel>
-                <Textarea id="desc" />
+                <Textarea
+                  value={desc}
+                  onChange={(e) => setDesc(e.target.value)}
+                  id="desc"
+                />
               </Box>
             </Stack>
           </DrawerBody>
@@ -151,7 +219,7 @@ export default function ProductCard({item}) {
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue">Submit</Button>
+            <Button onClick={editProduct} colorScheme="blue">Submit</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

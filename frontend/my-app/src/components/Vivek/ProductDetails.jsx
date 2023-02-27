@@ -29,7 +29,6 @@ import {MinusIcon,AddIcon} from "@chakra-ui/icons"
 import RecommendSlider from "./Slider";
 import RecentlySlider from "./RecentlySlider";
 import { Link, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 
 
@@ -45,9 +44,6 @@ const ProductDetails = () => {
   const [product,setProduct] = useState({})
   console.log({_id})
   const token = JSON.parse(localStorage.getItem("loginData"))
-  const { isAuth } = useSelector((store) => {
-    return store.auth;
-  });
   const getProduct=async()=>{
     let res = await fetch(
       `https://courageous-tuxedo-dog.cyclic.app/products/${_id}`
