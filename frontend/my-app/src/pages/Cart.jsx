@@ -3,11 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Cartcard } from "../components/ranbir/Cartcard";
 import styles from "./cart.module.css";
+import {Box, Button, Heading} from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 export const Cart = () => {
   const [data, setData] = useState([]);
 const loginData=JSON.parse(localStorage.getItem("loginData"));
 const user_id=loginData?loginData.id:"";
+const navigate=useNavigate();
   console.log(data)
   const t = JSON.parse(localStorage.getItem("loginData")) || null;
 
@@ -45,23 +48,25 @@ const user_id=loginData?loginData.id:"";
 
 
   const handleCheckout= ()=>{
-
-    axios.post(`https://defiant-fedora-yak.cyclic.app/api/stripe/create-checkout-session`,{
-      data
-    }).then((res)=>{
-      if(res.data.url){
-        window.location.href=res.data.url;
-      }
-    }).catch((err)=>{
-      console.log(err.message)
-    });
-
-    axios.post(`https://courageous-tuxedo-dog.cyclic.app/orders/upload/${user_id}`).then((res)=>{
-      console.log(res.data)
-    }).catch((err)=>{
-      console.log(err.message)
-    });
-
+    if(data.length>0){
+      axios.post(`https://defiant-fedora-yak.cyclic.app/api/stripe/create-checkout-session`,{
+        data
+      }).then((res)=>{
+        if(res.data.url){
+          window.location.href=res.data.url;
+        }
+      }).catch((err)=>{
+        console.log(err.message)
+      });
+  
+      axios.post(`https://courageous-tuxedo-dog.cyclic.app/orders/upload/${user_id}`).then((res)=>{
+        console.log(res.data)
+      }).catch((err)=>{
+        console.log(err.message)
+      });  
+    }else{
+navigate("/")
+    }
    
   }
 
@@ -168,7 +173,7 @@ const user_id=loginData?loginData.id:"";
       <div className={styles.cart}>
         <div className={styles.cart1}>
           {/* data */}
-          {data.map((el) => (
+          {data.length>0?data.map((el) => (
             <Cartcard
               key={el._id}
               {...el}
@@ -176,7 +181,12 @@ const user_id=loginData?loginData.id:"";
               Decq={Decq}
               DeleteData={DeleteData}
             />
-          ))}
+          )):
+          <Box mt="20px">
+            <Heading  >Your cart is Empty!</Heading>
+         <Link to="/"><Button mt="15px" _hover={{bgColor:"white",color:"black",border:"2px solid black",fontWeight:600}} size="lg" bgColor="black" color="white" >Continue Shopping</Button></Link> 
+          </Box>
+          }
         </div>
         <div className={styles.cart2}>
           <div className={styles.c1}>
@@ -245,18 +255,17 @@ const user_id=loginData?loginData.id:"";
             </p>
           </div>
           <div className={styles.c1} style={{ height: "40px" }}>
-            <button
-              style={{
-                width: "100%",
-                height: "100%",
-                background: "black",
-                color: "white",
-                letterSpacing: "2px",
-              }}
+            <Button 
+             width= "100%"
+             height="100%"
+             background= "black"
+             color= "white"
+             letterSpacing= "2px"
+              
               onClick={handleCheckout}
             >
-              PROCEED TO CHECKOUT
-            </button>
+              {data.length>0?"PROCEED TO CHECKOUT":"Continue Shopping"}
+            </Button>
           </div>
           <div className={styles.c12}>
             <div>

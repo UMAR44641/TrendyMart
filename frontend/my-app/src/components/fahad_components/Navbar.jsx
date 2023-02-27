@@ -362,6 +362,10 @@ const Navbar = () => {
                   document.querySelector(".dropdown-content").style.display =
                     "none";
                 }}
+                onClick={()=>{
+                  document.querySelector(".dropdown-content").style.display =
+                  "none";
+                }}
               >
                 <Text fontWeight={600}>{ele}</Text>
               </Box>

@@ -25,7 +25,7 @@ export const SideBar = () => {
   const initialcategory = searchParams.getAll("category");
   const initialOrder = searchParams.getAll("sort");
   // const [itemType, setitemType] = useState(initialState || []);
-  const [price, setprice] = useState([400,1000]);
+  const [price, setprice] = useState([10,3000]);
   const [category, setcategory] = useState(initialcategory[0] || "");
   const [order, setOrder] = useState(initialOrder[0] || "");
 // console.log(price)
@@ -209,7 +209,7 @@ export const SideBar = () => {
             >
               <div style={{display:"flex",justifyContent:"space-between",gap:"20px",alignItems:"center",marginBottom:"15px"}}><h3><b>MinPrice: {price[0]}</b></h3>    <h3><b>MaxPrice : {price[1]}</b></h3></div>
               <RangeSlider
-                defaultValue={[300, 1000]}
+                defaultValue={[10, 3000]}
                 min={0}
                 max={3000}
                 step={30}
