@@ -238,10 +238,6 @@ BaseURL = https://courageous-tuxedo-dog.cyclic.app
 
 (xiv) /orders/upload/:userID  <------>  {method====>POST}   <----> (to checkout from cart and place order. everything in cart is deleted)
 
-     ===request===
-
-      <--->req.body=everything in cart
-
     ===responses===
    1. res = {"message":"Your order has been placed"}
     4.res = {"message":error}     <----->[if any error happens]
