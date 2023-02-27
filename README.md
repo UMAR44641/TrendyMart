@@ -1,4 +1,5 @@
-# unsightly-bridge-4563
+# Trendy Mart <image src="![trendymartlogo](https://user-images.githubusercontent.com/112633484/221490586-a356492e-b1df-4c6e-a285-925b59d54cf7.gif)
+"></image>
 It is a collabrative project completed in 5 days by a team of five members using React, ui chakra,node, express, monogodb . An e-commerce website where you can shop for clothing. 
 
 ---
