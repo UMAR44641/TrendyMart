@@ -1,4 +1,4 @@
-💻Unique Project Name :- Trendy Mart 
+💻Unique Project Name :- <h1>Trendy Mart</h1> 
  
  
  💫Tech-Stack->
