@@ -16,7 +16,7 @@ It is a collabrative project completed in 5 days by a team of five members using
 ![Screenshot (84)](https://user-images.githubusercontent.com/112633484/221491116-81d15e1e-aa91-4eb5-a266-5d3dab64aaff.png)
 
 
-<>Registration</>
+<h2>Registration</h2>
 ![Screenshot (85)](https://user-images.githubusercontent.com/112633484/221493184-cba77464-53d0-43e3-893f-faea1dd0b7a7.png)
 
 ✨Collaboraters Names Are:-
