@@ -16,7 +16,7 @@ It is a collabrative project completed in 5 days by a team of five members using
 ✨Collaboraters Names Are:-
 
 1. Umar farooq- Team Lead
-2. Ujwal singh
+2. Ujjwal singh
 3. Vivek soni
 4. Fahad arif
 5. Ranbir singh
