@@ -17,7 +17,7 @@ It is a collabrative project completed in 5 days by a team of five members using
 
 
 <h2>Registration</h2>
-![Screenshot (85)](https://user-images.githubusercontent.com/112633484/221494315-bb790612-04d4-4606-998d-4579b48eb765.png)
+<image>![Screenshot (85)](https://user-images.githubusercontent.com/112633484/221494315-bb790612-04d4-4606-998d-4579b48eb765.png)</image>
 
 
 
