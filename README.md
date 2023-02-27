@@ -17,7 +17,12 @@ It is a collabrative project completed in 5 days by a team of five members using
 
 
 <h2>Registration</h2>
-![Screenshot (85)](https://user-images.githubusercontent.com/112633484/221493184-cba77464-53d0-43e3-893f-faea1dd0b7a7.png)
+![Screenshot (85)](https://user-images.githubusercontent.com/112633484/221493544-90c9f182-2366-4806-838e-165793f66390.png)
+
+
+<h2>Cart</h2>
+![Screenshot (86)](https://user-images.githubusercontent.com/112633484/221493807-9881065f-c29c-4701-b060-74d27ee1b63f.png)
+
 
 ✨Collaboraters Names Are:-
 
