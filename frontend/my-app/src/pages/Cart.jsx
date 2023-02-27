@@ -16,11 +16,14 @@ const user_id=loginData?loginData.id:"";
   const { token } = JSON.parse(localStorage.getItem("loginData")) || null;
   const getTotal = () => {
     let t = 0;
-    const totalPrice = data.reduce(
-      (acc, obj) => acc + obj.quantity * obj.price,
-      0
-    );
-    setTotal(totalPrice);
+    // const totalPrice = data.reduce(
+    //   (acc, obj) => acc + obj.quantity * obj.price,
+    //   0
+    // );
+    data.forEach((e)=>{
+      t=t+Number(e.price)*Number(e.quantity);
+    })
+    setTotal(t);
   };
 
   const getData = async () => {
@@ -34,7 +37,7 @@ const user_id=loginData?loginData.id:"";
         setData(res.data);
         console.log(res.data);
       });
-    getTotal();
+    // getTotal();
   };
 
 
@@ -115,8 +118,8 @@ const user_id=loginData?loginData.id:"";
 
   useEffect(() => {
     getData();
-    // getTotal();
-  }, []);
+    getTotal();
+  }, [data]);
   return (
     <div>
       <div className={styles.cont1}>
