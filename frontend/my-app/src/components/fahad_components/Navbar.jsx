@@ -348,8 +348,18 @@ const Navbar = () => {
           justifyContent="space-between"
         >
           {data.map((ele) => {
+            let url;
+            if(ele=="Men"){
+              url=`/products?category=mens&maxprice=3000&minprice=10`
+            }else if(ele=="Women"){
+              url=`/products?category=womens&maxprice=3000&minprice=10`
+            }else if(ele=="Kids"){
+              url=`/products?category=kids&maxprice=3000&minprice=10`
+            }else{
+              url=`/products?maxprice=3000&minprice=10`
+            }
             return (
-             <Link to="/products" > <Box
+             <Link to={url} > <Box
                 onMouseEnter={() => {
                     document.querySelector(".dropdown-content").style.display =
                     "flex";
