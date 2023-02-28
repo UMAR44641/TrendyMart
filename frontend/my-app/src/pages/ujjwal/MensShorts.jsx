@@ -31,7 +31,6 @@ const MensShorts = () => {
     axios
       .get("https://courageous-tuxedo-dog.cyclic.app/products", params)
       .then((res) => {
-        console.log(res.data);
         setdata(res.data);
       });
   };

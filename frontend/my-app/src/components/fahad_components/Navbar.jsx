@@ -164,7 +164,17 @@ const Navbar = () => {
               </DrawerHeader>
               <DrawerBody>
                 {data.map((e) => {
-                  return <Text mt="20px">{e}</Text>;
+                   let url;
+                   if(e=="Men"){
+                     url=`/products?category=mens&maxprice=3000&minprice=10`
+                   }else if(e=="Women"){
+                     url=`/products?category=womens&maxprice=3000&minprice=10`
+                   }else if(e=="Kids"){
+                     url=`/products?category=kids&maxprice=3000&minprice=10`
+                   }else{
+                     url=`/products?maxprice=3000&minprice=10`
+                   }
+                  return <Link key={e} to={url}><Text  mt="20px">{e}</Text></Link>;
                 })}
               </DrawerBody>
               <DrawerFooter borderTopWidth="1px">
@@ -359,7 +369,7 @@ const Navbar = () => {
               url=`/products?maxprice=3000&minprice=10`
             }
             return (
-             <Link to={url} > <Box
+             <Link to={url} key={ele} > <Box
                 onMouseEnter={() => {
                     document.querySelector(".dropdown-content").style.display =
                     "flex";
@@ -422,6 +432,7 @@ const Navbar = () => {
                   mb="10px"
                   textAlign="left"
                   fontSize="xs"
+                  key={ele}
                 >
                   {ele}
                 </Text>
@@ -450,6 +461,7 @@ const Navbar = () => {
                     mb="10px"
                     textAlign="left"
                     fontSize="xs"
+                    key={ele}
                   >
                     {ele}
                   </Text>
@@ -474,6 +486,7 @@ const Navbar = () => {
                     mb="10px"
                     textAlign="left"
                     fontSize="xs"
+                    key={ele}
                   >
                     {ele}
                   </Text>
@@ -501,6 +514,7 @@ const Navbar = () => {
                     mb="10px"
                     textAlign="left"
                     fontSize="xs"
+                    key={ele}
                   >
                     {ele}
                   </Text>
@@ -526,6 +540,7 @@ const Navbar = () => {
                     mb="10px"
                     textAlign="left"
                     fontSize="xs"
+                    key={ele}
                   >
                     {ele}
                   </Text>
@@ -553,6 +568,7 @@ const Navbar = () => {
                     mb="10px"
                     textAlign="left"
                     fontSize="xs"
+                    key={ele}
                   >
                     {ele}
                   </Text>
@@ -572,6 +588,7 @@ const Navbar = () => {
                       mb="10px"
                       textAlign="left"
                       fontSize="xs"
+                      key={ele}
                     >
                       {ele}
                     </Text>

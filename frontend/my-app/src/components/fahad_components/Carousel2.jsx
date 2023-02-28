@@ -113,7 +113,7 @@ const Carousel2 =()=> {
      >
       {
        data2.map((item)=>{
-        return <SwiperSlide>
+        return <SwiperSlide key={item.image}>
         <Box  flex="1" bg="white"  m="auto" mb="40px" borderRadius="10px" >
     <Image  w="90%" src={item.image} display="block" m="auto" />
     <Text fontSize={{md:"sm",base:"xs"}} >{item.name}</Text>

@@ -7,11 +7,10 @@ import {Box, Button, Heading} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 export const Cart = () => {
-  const [data, setData] = useState([]);
+const [data, setData] = useState([]);
 const loginData=JSON.parse(localStorage.getItem("loginData"));
 const user_id=loginData?loginData.id:"";
 const navigate=useNavigate();
-  console.log(data)
   const t = JSON.parse(localStorage.getItem("loginData")) || null;
 
   const [total, setTotal] = useState(0);
@@ -38,7 +37,7 @@ const navigate=useNavigate();
       })
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
+  
       });
     // getTotal();
   };
@@ -59,11 +58,7 @@ const navigate=useNavigate();
         console.log(err.message)
       });
   
-      axios.post(`https://courageous-tuxedo-dog.cyclic.app/orders/upload/${user_id}`).then((res)=>{
-        console.log(res.data)
-      }).catch((err)=>{
-        console.log(err.message)
-      });  
+      
     }else{
 navigate("/")
     }
